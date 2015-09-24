@@ -33,6 +33,7 @@ Notes on User Experience:
 
   * "enrich" is the word you just looked up
   * previous words are listed in reverse chronological order of when they were searched
+  * successive searches load without new page load
   * each definition starts minimized (12 word maximum or so), but can be expanded for full definition
   * when page loads, cursor automatically focuses in search box
   * enter key submits search
