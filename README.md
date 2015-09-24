@@ -1,15 +1,12 @@
 Dick
 ====
 
-Dick isn't very smart.
+Dick:
 
-Dick uses the dictionary A LOT.
-
-But he doesn't learn the word by only looking it up once.
-
-He wants a place that remembers what he looked up yesterday, and the day before.
-
-Like a study list.
+  * Isn't very smart
+  * Uses the dictionary A LOT
+  * Doesn't learn the word by only looking it up once
+  * Wants a place that remembers what he looked up yesterday, and the day before, like a study list
 
 
 Imagine this User Experience:
