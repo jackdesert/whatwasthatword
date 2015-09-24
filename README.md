@@ -2,9 +2,13 @@ Dick
 ====
 
 Dick isn't very smart.
+
 Dick uses the dictionary A LOT.
+
 But he doesn't learn the word by only looking it up once.
+
 He wants a place that remembers what he looked up yesterday, and the day before.
+
 Like a study list.
 
 
