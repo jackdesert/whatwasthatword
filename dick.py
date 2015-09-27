@@ -21,26 +21,37 @@ def printWord(word):
     myDict = json.loads(contentString)        # type is 'dict'
     results = myDict['results']
 
-    resultsWithDefinitions = []
-    for result in results:
-        if result['senses']:
-            resultsWithDefinitions.append(result)
+    # Only results that have senses
+    results = list(filter(lambda x: x['senses'], results))
 
-    firstResult = resultsWithDefinitions[0]
-    senses = firstResult['senses']
-    firstSense = senses[0]
-    definition = firstSense['definition'][0]
-    definitionWithWord = "%s: %s" % (word, definition)
-    defs.append(definitionWithWord)
+    # Keep only where headword matches exactly
+    results = list(filter(lambda x: x['headword'].lower() == word.lower(), results))
+    #for result in results:
+    #    if result['senses']:
+    #        resultsWithDefinitions.append(result)
+
     # Get ip from nginx if available
-
     ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-    redisClient.lpush(ip_address, definitionWithWord)
+
+    for result in results:
+        for sense in result['senses']:
+            if not 'definition' in sense: continue
+            #import pdb; pdb.set_trace();
+            for definition in sense['definition']:
+                definitionWithWord = "%s: %s" % (word, definition)
+                redisClient.lpush(ip_address, definitionWithWord)
+
+    #firstResult = results[0]
+    #senses = firstResult['senses']
+    #firstSense = senses[0]
+    #definition = firstSense['definition'][0]
+    #definitionWithWord = "%s: %s" % (word, definition)
+    #defs.append(definitionWithWord)
+
 
     defsInRedis = redisClient.lrange(ip_address, 0, 10)
     toString = lambda x : x.decode('utf-8')
     defsInRedisStrings = list(map(toString, defsInRedis))
-    #import pdb; pdb.set_trace();
 
     return('<br>'.join(defsInRedisStrings))
 
