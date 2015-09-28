@@ -26,6 +26,10 @@ def printWord(word):
 
     # Keep only where headword matches exactly
     results = list(filter(lambda x: x['headword'].lower() == word.lower(), results))
+
+    # Keep only where part_of_speech is given
+    results = list(filter(lambda x: 'part_of_speech' in x, results))
+
     #for result in results:
     #    if result['senses']:
     #        resultsWithDefinitions.append(result)
@@ -34,11 +38,13 @@ def printWord(word):
     ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
     for result in results:
+        part_of_speech = result['part_of_speech']
+        headword = result['headword']
         for sense in result['senses']:
             if not 'definition' in sense: continue
             #import pdb; pdb.set_trace();
             for definition in sense['definition']:
-                definitionWithWord = "%s: %s" % (word, definition)
+                definitionWithWord = "%s (%s): %s" % (headword, part_of_speech, definition)
                 redisClient.lpush(ip_address, definitionWithWord)
 
     #firstResult = results[0]

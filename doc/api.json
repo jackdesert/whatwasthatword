@@ -1,0 +1,50 @@
+API Documentation
+=================
+
+Each word is presented to the front end as a JSON object. Here is the format:
+
+
+    {
+      word: 'mushroom',
+      syllables: ['mush', 'room'],
+      pronunciation:  {
+        ipa: '/ˈməSHˌro͞om,ˈməSHˌro͝om/',
+        mp3: 'http://a.com/mushroom.mp3'
+      },
+      parts_of_speech: {
+        noun: [
+          {
+            definition: 'a fungal growth that typically takes the form of a domed cap on a stalk, often with gills on the underside of the cap.',
+            example: 'the mushrooms thrive in this warm wet weather',
+            synonyms: ['fungus', 'button mushroom', 'cep', 'chanterelle', 'cremini', 'enoki', 'field mushroom', 'honey mushroom', 'horse mushroom', 'matsutake', 'morel', 'oyster mushroom', 'pine mushroom', 'porcini', 'portobello', 'shiitake', 'death cap', 'bolete']
+          },
+          {
+            definition: 'a pale pinkish-brown color.',
+            example: 'a mushroom leather bag'
+          }
+        ],
+        verb: [
+          {
+            definition: 'increase, spread, or develop rapidly.',
+            example: 'environmental concern mushroomed in the 1960s',
+            synonyms: ['proliferate', 'grow/develop rapidly', 'burgeon', 'spread', 'increase', 'expand', 'boom', 'explode', 'snowball', 'rocket', 'skyrocket']
+          },
+          {
+            defintion: '(of the smoke, fire, or flames produced by an explosion) spread into the air in a shape resembling that of a mushroom.',
+            example: 'the grenade mushroomed into red fire as it hit the hillside'
+          }
+        ]
+      }
+    }
+
+
+
+Note that some words will have only "noun" part of speech, while others may have "noun", "verb", "adjective".
+
+Note that there is no limit to how many definitions may exist for each part of speech.
+
+Note that only one pronunciation mp3 is given. This is not ideal, because what about the word "lead", which means something completely different when pronounced one way than when pronounced another way?
+
+
+
+
