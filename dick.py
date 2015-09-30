@@ -76,9 +76,14 @@ def printWord(wordstring):
     words_in_redis = redisClient.lrange(ip_address, 0, 10)
     toString = lambda x : x.decode('utf-8')
     words_in_redis_strings = list(map(toString, words_in_redis))
+    data = []
+    for entry in words_in_redis_strings:
+        data.append(json.loads(entry))
+    print(data)
 
+    #redisClient.flushall()
     #return('<hr>'.join(words_in_redis_strings))
-    return render_template('index.jj2', data=words_in_redis_strings)
+    return render_template('index.jj2', data=data)
 
 
 if __name__ == "__main__":
