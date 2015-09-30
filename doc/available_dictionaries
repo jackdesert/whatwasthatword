@@ -1,0 +1,18 @@
+Macmillan
+Contacted them asking for an api key and documentatino
+Their dict is free for noncommercial purposes.
+
+Yandex
+This is a translation service
+
+Pearson
+Wrote to them (email) and asked for examples.
+It's free up to 4 millions calls per month
+found the docs: http://developer.pearson.com/content-apis/get-started
+registered for an api key
+
+Example API Call:
+https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=test&apikey=bxM09RSxa7VFkARAAYJJ8XSw4XXavRsu
+
+Results are returned in JSON
+

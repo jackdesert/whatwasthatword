@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Dickshunary</title>
+        <link rel="stylesheet" href="style.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+
+    </head>
+    <body>
+        <div id="content"></div>
+
+        <script type="text/babel">
+
+            var WholePage = React.createClass({
+                render: function() {
+                    return (
+                        <div className="wrapper">
+                            <h1>Dickshunary</h1>
+                            <WordList data={this.props.data}/>
+                        </div>
+                    )
+                }
+            })
+
+            var WordList = React.createClass({
+                render: function() {
+                    var wordNodes = this.props.data.map(function(word){
+                        return (
+                            <Word wordObject={word} />
+                    )
+                })
+
+
+
+                return (
+                    <div className="wordList">
+                      {wordNodes}
+                    </div>
+                )
+              }
+            })
+
+
+            var Word = React.createClass({
+                render: function() {
+                    return (
+                        <div className="word-holder">
+                            <div className="word">
+                                {this.props.word}
+                            </div>
+
+                            <div className="pronunciation">
+                                <div className="ipa">
+                                    {this.props.pronunciation.ipa}
+                                </div>
+                                <div className="mp3">
+                                    {this.props.pronunciation.mp3}
+                                </div>
+                            </div>
+
+                        </div>
+                    )
+              }
+            })
+
+            // Note the React.render call needs to come after other things are defined.
+            var data = [{'word':'Hello', 'pronunciation':{'ipa':'whee', 'mp3':'yess.mp3'}]
+
+            React.render(
+              <WholePage data={ data } />,
+              document.getElementById('content')
+            )
+        </script>
+    </body>
+</html>

@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, render_template
 import requests, json, redis
 app = Flask(__name__)
 
@@ -77,8 +77,8 @@ def printWord(wordstring):
     toString = lambda x : x.decode('utf-8')
     words_in_redis_strings = list(map(toString, words_in_redis))
 
-    return('<hr>'.join(words_in_redis_strings))
-    #return(json.dumps(word_object))
+    #return('<hr>'.join(words_in_redis_strings))
+    return render_template('index.jj2', data=words_in_redis_strings)
 
 
 if __name__ == "__main__":
