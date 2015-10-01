@@ -31,11 +31,17 @@
 
 
             var WholePage = React.createClass({
+                getInitialState: function() {
+                console.log('data: ', {{data}})
+                    return {data: {{data}} };
+                },
+
                 render: function() {
+                    window.ee = this
                     return (
                         <div className="wrapper">
                             <h1>WhatWasThatWord?</h1>
-                            <WordList data={this.props.data}/>
+                            <WordList data={this.state.data}/>
                         </div>
                     )
                 }
@@ -117,7 +123,7 @@
             var data2 = [{'word':'Hello', 'pronunciation':{'ipa':'whee', 'mp3':'yess.mp3'}}]
 
             React.render(
-              <WholePage data={ {{data}} } />,
+              <WholePage />,
               document.getElementById('content')
             )
         </script>
