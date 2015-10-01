@@ -38,3 +38,12 @@ Notes on User Experience:
   * successive searches load without page load
   * each definition starts minimized (12 word maximum or so), but can be expanded for full definition
 
+
+
+TODO
+----
+
+  * Make sure if a word has two definitions under a single part_of_speech, that they both get displayed
+    Which might involve finding a different API provider since Pearsons seems to only give one definition
+    per part_of_speech.
+  * Play mp3 inline

@@ -1,4 +1,192 @@
-body{
-  background-color: yellow;
-  color: black;
+h1{
+  text-align: center;
+}
+
+div{
+  color: #222;
+  border: 1px solid #aaa;
+}
+
+.bold{
+  font-weight: bold;
+}
+
+.italic{
+  font-style: italic;
+}
+
+.inline{
+  display: inline;
+}
+
+.inline-block{
+  display: inline-block;
+}
+
+.hidden{
+  display: none;
+}
+
+#content{
+  padding: 0.1rem;
+}
+
+.word-wrapper{
+}
+
+.word-wrapper + .word-wrapper{
+  padding-top: 2rem;
+}
+
+.the-word{
+  font-size: 2rem;
+  padding-bottom: 0.5rem;
+}
+
+.part-of-speech{
+  font-style: italic;
+}
+
+.part-of-speech-contents{
+  padding-left: 3rem;
+}
+
+
+.definition{
+}
+
+.example{
+  font-style: italic;
+  color: #777;
+}
+
+.pronunciation{
+}
+
+.pronunciation .ipa{
+}
+
+.pronunciation .mp3 img{
+  width: 15px;
+}
+
+
+.message-or-event{
+  position: relative;
+  padding: 0.5rem;
+  border: 1px solid #aaa;
+  background-color: #fafafa;
+  overflow: hidden;
+  box-shadow: 0.2rem 0.15rem 0.1rem #888;
+  margin: 0.3rem;
+  border-radius: 0.5rem;
+}
+
+.message-or-event.odd.duplicate, .message-or-event.even.duplicate{
+  background-color: #800;
+}
+
+.message-or-event.odd{
+  /* background-color: #e0e0e0; */
+}
+
+
+.footer{
+  text-align: center;
+  color: #888;
+  /* The long padding at the bottom of the footer is so that when
+   * items are collapsed the page will (hopefully) not scroll
+   * too much padding and a page refresh is weird if you are at the
+   * bottom */
+  padding: 2rem 2rem 1rem;
+}
+
+
+a{
+  /* text-decoration: none; */
+  color: inherit;
+}
+a:hover{
+  /*font-weight: bold;*/
+  color: #666;
+}
+
+.question, .answer{
+  color: #222;
+  padding: 0 3%;
+}
+
+.question{
+  margin-top: 2rem;
+  font-size: 130%;
+  font-weight: bold;
+  font-size: 110%;
+}
+
+.answer + .answer{
+  padding-top: 0.5rem;
+}
+
+button.toggle-additional-dates{
+  font-size: 130%;
+  margin: 2rem;
+  border-radius: 0.3rem;
+  /*border-width: 0;*/
+  cursor: pointer;
+  background-color: #ccc;
+  padding: 0.4rem 2rem;
+}
+
+button.toggle-additional-dates:hover{
+  background-color: #fff;
+}
+
+button.toggle-additional-dates.working{
+  background-color: #888;
+}
+
+button.toggle-additional-dates.show:before{
+  content: 'Show More';
+}
+
+button.toggle-additional-dates:before{
+  content: 'Show Less';
+}
+
+
+/* Medium and large screens */
+@media screen and (min-width: 510px) {
+
+  body{
+    padding: 2rem !important;
+  }
+
+  #content{
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 25px;
+  }
+
+  .message-or-event{
+    padding: 1rem;
+    /* margin: 1rem 3rem; */
+    box-shadow: 0.3rem 0.2rem 0.1rem #888;
+    border-radius: 0.8rem;
+  }
+
+  /* Note that hover only applies to desktops */
+  .message-or-event:hover{
+    background-color: #fff;
+    cursor: pointer;
+    border-color: #888;
+  }
+
+  .footer{
+    margin: 1rem;
+  }
+
+}
+
+/* Large screens */
+@media screen and (min-width: 1000px) {
 }

@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template
+from livereload import Server as LiveReloadServer
 import requests, json, redis
 app = Flask(__name__)
 
@@ -88,5 +89,11 @@ def printWord(wordstring):
 
 if __name__ == "__main__":
     # enable debug so errors will be displayed, and so new code will be reloaded
-    app.debug = True
-    app.run('0.0.0.0')
+    #app.debug = True
+    #app.run('0.0.0.0')
+
+    # app is a Flask object
+
+    server = LiveReloadServer(app.wsgi_app)
+    # server.watch
+    server.serve(port=5000, host='0.0.0.0')

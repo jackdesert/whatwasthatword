@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Dickshunary</title>
+        <link href='{{ url_for('static', filename='reset.css') }}' rel='stylesheet' type='text/css'>
         <link href='{{ url_for('static', filename='style.css') }}' rel='stylesheet' type='text/css'>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
@@ -17,7 +18,7 @@
                 render: function() {
                     return (
                         <div className="wrapper">
-                            <h1>Dickshunary</h1>
+                            <h1>WhatWasThatWord?</h1>
                             <WordList data={this.props.data}/>
                         </div>
                     )
@@ -60,10 +61,12 @@
                         var individualEntries = pos[key].map(function(entry){
                             console.log('entry: ', entry)
                             return (
-                                <div className="part-of-speech-holder">
+                                <div className="part-of-speech-wrapper">
                                     <div className="part-of-speech">{key}</div>
-                                    <div className="definition">{entry.definition}</div>
-                                    <div className="example">{entry.example}</div>
+                                    <div className="part-of-speech-contents">
+                                        <div className="definition">{entry.definition}</div>
+                                        <div className="example">{entry.example}</div>
+                                    </div>
                                 </div>
                             )
                         })
@@ -72,17 +75,20 @@
 
 
                     return (
-                        <div className="word-holder">
-                            <div className="word">
+                        <div className="word-wrapper">
+                            <div className="the-word">
                                 {this.props.entry.word}
                             </div>
 
                             <div className="pronunciation">
-                                <div className="ipa">
-                                    {this.props.entry.pronunciation.ipa}
+                                <div className="ipa inline">
+                                    /{this.props.entry.pronunciation.ipa}/
                                 </div>
-                                <div className="mp3">
-                                    {this.props.entry.pronunciation.mp3}
+                                <div className="mp3 inline">
+                                    <a href={this.props.entry.pronunciation.mp3}>
+                                        <img src='{{url_for('static', filename='speaker.png')}}' />
+                                    </a>
+
                                 </div>
                             </div>
                             {partsOfSpeech}
