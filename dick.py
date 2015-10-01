@@ -66,6 +66,7 @@ def printWord(wordstring):
     #    if result['senses']:
     #        resultsWithDefinitions.append(result)
 
+    redisClient.flushall()
     # Get ip from nginx if available
     ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
     redisClient.lpush(ip_address, word_object_json)
@@ -81,7 +82,6 @@ def printWord(wordstring):
         data.append(json.loads(entry))
     print(data)
 
-    #redisClient.flushall()
     #return('<hr>'.join(words_in_redis_strings))
     return render_template('index.jj2', data=data)
 
