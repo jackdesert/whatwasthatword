@@ -13,6 +13,22 @@
         <div id="content"></div>
 
         <script type="text/babel">
+            var oddOrEven = function(){
+                var state = 'odd'
+                var toggle = function(klass){
+                    if (state === 'odd'){
+                        state = 'even'
+                    }else{
+                        state = 'odd'
+                    }
+                    return klass + ' ' + state
+                }
+                return { 'toggle' : toggle }
+            }
+
+            var toggle = oddOrEven()
+
+
 
             var WholePage = React.createClass({
                 render: function() {
@@ -65,7 +81,7 @@
                                     <div className="part-of-speech">{key}</div>
                                     <div className="part-of-speech-contents">
                                         <div className="definition">{entry.definition}</div>
-                                        <div className="example">{entry.example}</div>
+                                        <div className="example">&quot;{entry.example}&quot;</div>
                                     </div>
                                 </div>
                             )
@@ -75,7 +91,7 @@
 
 
                     return (
-                        <div className="word-wrapper">
+                        <div className={ toggle.toggle('word-wrapper') }>
                             <div className="the-word">
                                 {this.props.entry.word}
                             </div>

@@ -67,7 +67,7 @@ def printWord(wordstring):
     #    if result['senses']:
     #        resultsWithDefinitions.append(result)
 
-    redisClient.flushall()
+    #redisClient.flushall()
     # Get ip from nginx if available
     ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
     redisClient.lpush(ip_address, word_object_json)

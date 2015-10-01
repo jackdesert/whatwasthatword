@@ -4,7 +4,6 @@ h1{
 
 div{
   color: #222;
-  border: 1px solid #aaa;
 }
 
 .bold{
@@ -32,15 +31,24 @@ div{
 }
 
 .word-wrapper{
+  padding: 0.6rem 1rem;
+
+}
+
+.word-wrapper.even{
+  background-color: #e0e0e0;
+}
+
+.word-wrapper.odd{
+  background-color: #f8f8f8;
 }
 
 .word-wrapper + .word-wrapper{
-  padding-top: 2rem;
+  /* border-top: 3px solid #aaa; */
 }
 
 .the-word{
   font-size: 2rem;
-  padding-bottom: 0.5rem;
 }
 
 .part-of-speech{
@@ -61,9 +69,17 @@ div{
 }
 
 .pronunciation{
+  padding-bottom: 0.5rem;
 }
 
-.pronunciation .ipa{
+.pronunciation .ipa span{
+  font-size: 1.4rem;
+}
+
+.pronunciation .mp3{
+  padding-left: 0.5rem;
+  position: relative;
+  top: 1px;
 }
 
 .pronunciation .mp3 img{
@@ -86,9 +102,6 @@ div{
   background-color: #800;
 }
 
-.message-or-event.odd{
-  /* background-color: #e0e0e0; */
-}
 
 
 .footer{

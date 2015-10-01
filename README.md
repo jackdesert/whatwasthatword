@@ -47,3 +47,5 @@ TODO
     Which might involve finding a different API provider since Pearsons seems to only give one definition
     per part_of_speech.
   * Play mp3 inline
+  * Report to Pearson that their mp3s only load half the time with error:
+    "Server error: The difference between the request time and the current time is too large."
