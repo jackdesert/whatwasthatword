@@ -96,4 +96,4 @@ if __name__ == "__main__":
 
     server = LiveReloadServer(app.wsgi_app)
     # server.watch
-    server.serve(port=5000, host='0.0.0.0')
+    server.serve(port=3956, host='0.0.0.0')
