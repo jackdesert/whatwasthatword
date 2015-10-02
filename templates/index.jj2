@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Dickshunary</title>
+        <title>What Was That Word?</title>
         <link href='{{ url_for('static', filename='reset.css') }}' rel='stylesheet' type='text/css'>
         <link href='{{ url_for('static', filename='style.css') }}' rel='stylesheet' type='text/css'>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>

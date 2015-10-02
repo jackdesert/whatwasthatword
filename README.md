@@ -13,9 +13,9 @@ http://whatwasthatword.com
 Technologies
 ------------
 
-    back-end:  Python, Flask, Redis
-    front-end: ReactJS
-    API:       Pearson Dictionary API
+    back-end:    Python, Flask, Redis
+    front-end:   ReactJS
+    data-source: Pearson Dictionary API
 
 
 No Login Required
@@ -74,6 +74,9 @@ TODO
   * Show that word is being fetched
   * Autofocus
   * Make prod more robust by not autoreloading
+  * Optimize padding breakpoint for android phones
+  * Make input bigger on phone
+  * Make speaker display correct size android
 
 DONE
 ----

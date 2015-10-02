@@ -70,5 +70,11 @@ Q: Why do you only allow N records (originally 200)?
 A: To make it more difficult for criminal hackers to bloat redis, and
    to make sure the html renders quickly
 
+Q: Why the change to Merriam Webster?
+A: Because Pearsons had no definition for "rich" or "snobby", in part because of API anomalies.
+   Also, Merriam Webster is also free, and has more sophisticated and more volume of definitions
+
+Q: Why not use xmltodict?
+A: xmltodict does not preserve the <it> tags that Merriam Webster uses in its examples.
 
 

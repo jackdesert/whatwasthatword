@@ -51,3 +51,9 @@ https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=test&apikey=bxM0
 
 Results are returned in JSON
 
+
+Merriam-Webster
+---------------
+
+site: dictionaryapi.com
+requested keys via website
