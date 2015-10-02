@@ -65,5 +65,10 @@ Q: Why is this written in Flask instead of Django?
 
 A: Because it is intended as a lightweight application.
 
+Q: Why do you only allow N records (originally 200)?
+
+A: To make it more difficult for criminal hackers to bloat redis, and
+   to make sure the html renders quickly
+
 
 

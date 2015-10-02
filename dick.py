@@ -3,16 +3,17 @@ from livereload import Server as LiveReloadServer
 import requests, json, redis
 app = Flask(__name__)
 
-defs = []
-pool = redis.ConnectionPool(host='localhost', port=6379, db=0)
-redisClient = redis.Redis(connection_pool=pool)
+POOL = redis.ConnectionPool(host='localhost', port=6379, db=0)
+REDIS_CLIENT = redis.Redis(connection_pool=POOL)
+MAX_STORAGE_INDEX = 99
 
 @app.route("/api/search", methods=['POST'])
 def search_api():
-    #import pdb; pdb.set_trace();
     wordstring = request.form.getlist('word')[0]
     url = "https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=%s&apikey=bxM09RSxa7VFkARAAYJJ8XSw4XXavRsu" % wordstring
+    print('requesting %s' % wordstring)
     r = requests.get(url)
+    print('completed  %s' % wordstring)
     content = r.content                       # type is 'bytes'
     contentString = content.decode('utf-8')
     myDict = json.loads(contentString)        # type is 'dict'
@@ -49,20 +50,17 @@ def search_api():
             ipa = result['pronunciations'][0]['ipa']
             word_object['pronunciation'] = { 'ipa' : ipa, 'mp3' : mp3 }
 
-    print(json.dumps(word_object))
     word_object_json = json.dumps(word_object)
 
+    #import pdb; pdb.set_trace();
 
-    #for result in results:
-    #    if result['senses']:
-    #        resultsWithDefinitions.append(result)
+    if word_object['parts_of_speech']:
+        REDIS_CLIENT.lpush(ip_address(), word_object_json)
+        # Limit how many records a given user can store
+        REDIS_CLIENT.ltrim(ip_address(), 0, MAX_STORAGE_INDEX)
 
-    #redisClient.flushall()
-    # Get ip from nginx if available
-    #ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-    redisClient.lpush(ip_address, word_object_json)
-
-    print(word_object_json)
+    # TODO Return an error explicitly if no parts_of_speech
+    # TODO so that the error checking is cleaner on the EcmaScript end
     return word_object_json
 
 
@@ -71,20 +69,23 @@ def search_api():
 @app.route("/")
 def home_page():
 
-    #redisClient.flushall()
-    words_in_redis = redisClient.lrange(ip_address, 0, 10)
+    #REDIS_CLIENT.flushall()
+    words_in_redis = REDIS_CLIENT.lrange(ip_address(), 0, MAX_STORAGE_INDEX)
     toString = lambda x : x.decode('utf-8')
     words_in_redis_strings = list(map(toString, words_in_redis))
     data = []
     for entry in words_in_redis_strings:
         data.append(json.loads(entry))
-    print(data)
 
-    #return('<hr>'.join(words_in_redis_strings))
     return render_template('index.jj2', data=data)
 
+
 def ip_address():
-    ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+    # Use ip address passed from nginx if available
+    #
+    # GOTCHA: Make sure you call this method with (),
+    # or the function will be shoved into redis instead of the ip address
+    return request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
 
 if __name__ == "__main__":
