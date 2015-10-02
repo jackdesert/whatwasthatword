@@ -50,15 +50,22 @@ TODO
   * Report to Pearson that their mp3s only load half the time with error:
     "Server error: The difference between the request time and the current time is too large."
   * Teach it to show "Vietnam" (capitalized) when searching for "vietnam" (lowercase)
-  * sheesh
-  * crimeny
-  * yikes
+  * what about these words: sheesh, crimeny, yikes
   * Synonyms
-  * Use a *reputable* dictionary, that has better and more definitions, like merriam webster
-  * Expansion for more info
+  * Use a *reputable* dictionary, that has more sophisticated definitions, like merriam webster
+  * Expansion for more info?
   * Get "looking" to show up
-  * Favicon to prevent 404
+  * Great Favicon
+  * Clean up code so most of it lives in a class
+  * Show that word is being fetched
+  * Autofocus
+  * Make prod more robust by not autoreloading
 
 DONE
 ----
+  * 500, 404
+  * Fixed so that words are persistent through server restarts
   * Do something sensible when searching for the word "vietnam", which has no part_of_speech
+  * Show more than 10 words
+  * Store only 100 words
+  * Plain favicon to prevent 404
