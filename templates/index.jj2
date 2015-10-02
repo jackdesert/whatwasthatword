@@ -37,22 +37,19 @@
                     return {data: {{data}} };
                 },
 
-                handleSearchSubmit: function(searchText) {
+                handleSearchSubmit: function(jsonData) {
                     var existingWords = this.state.data
                     //var newComments = comments.concat([comment])
                     $.ajax({
                         url: this.props.url,
                         dataType: 'json',
                         type: 'POST',
-                        data: { 'word':searchText },
+                        data: jsonData,
                         success: function(data) {
                             alert('hi')
                             //this.setState({data: data})
                         }.bind(this),
                         error: function(xhr, status, err) {
-window.ee = this
-window.eee = err
-window.eeee = status
                             console.error(this.props.url, status, err.toString())
                         }.bind(this)
                     })
@@ -76,7 +73,7 @@ window.eeee = status
                     if (!text) {
                       return
                     }
-                    this.props.onSearchSubmit({text: text})
+                    this.props.onSearchSubmit({word: text})
                     React.findDOMNode(this.refs.text).value = ''
                 },
                 render: function() {

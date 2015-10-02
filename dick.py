@@ -7,20 +7,10 @@ defs = []
 pool = redis.ConnectionPool(host='localhost', port=6379, db=0)
 redisClient = redis.Redis(connection_pool=pool)
 
-@app.route("/")
-def hello():
-    r = requests.get("https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=test&apikey=bxM09RSxa7VFkARAAYJJ8XSw4XXavRsu")
-    return "Basic"
-
-
 @app.route("/api/search", methods=['POST'])
-def search():
-    text = "{\"text\":\"the API says hello\"}"
-    #return text, 201, {'Content-Type': 'application/json; charset=utf-8'}
-    return text
-
-@app.route("/<wordstring>")
-def printWord(wordstring):
+def search_api():
+    #import pdb; pdb.set_trace();
+    wordstring = request.form.getlist('word')[0]
     url = "https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=%s&apikey=bxM09RSxa7VFkARAAYJJ8XSw4XXavRsu" % wordstring
     r = requests.get(url)
     content = r.content                       # type is 'bytes'
@@ -46,7 +36,6 @@ def printWord(wordstring):
 
         headword = result['headword']
 
-        #import pdb; pdb.set_trace();
 
         for sense in result['senses']:
             if not 'definition' in sense: continue
@@ -65,22 +54,25 @@ def printWord(wordstring):
     word_object_json = json.dumps(word_object)
 
 
-
-
-
-
     #for result in results:
     #    if result['senses']:
     #        resultsWithDefinitions.append(result)
 
     redisClient.flushall()
     # Get ip from nginx if available
-    ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+    #ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
     redisClient.lpush(ip_address, word_object_json)
 
+    print(word_object_json)
+    return word_object_json
 
 
 
+
+@app.route("/")
+def home_page():
+
+    redisClient.flushall()
     words_in_redis = redisClient.lrange(ip_address, 0, 10)
     toString = lambda x : x.decode('utf-8')
     words_in_redis_strings = list(map(toString, words_in_redis))
@@ -92,10 +84,13 @@ def printWord(wordstring):
     #return('<hr>'.join(words_in_redis_strings))
     return render_template('index.jj2', data=data)
 
+def ip_address():
+    ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+
 
 if __name__ == "__main__":
     # enable debug so errors will be displayed, and so new code will be reloaded
-    #app.debug = True
+    app.debug = True
     #app.run('0.0.0.0')
 
     # app is a Flask object
