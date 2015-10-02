@@ -172,5 +172,14 @@
               document.getElementById('content')
             )
         </script>
+        <div class='footer'>
+            <div class='footer-row'>
+                Created by <a href='mailto:jackdesert@gmail.com?Subject=Cool%20Dictionary'>Jack Desert</a>
+            </div>
+
+            <div class='footer-row'>
+                Source Code: <a href='https://github.com/jackdesert/dick' target='_blank'>here</a>
+            </div>
+        </footer>
     </body>
 </html>

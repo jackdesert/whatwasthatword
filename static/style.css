@@ -111,13 +111,17 @@ form.search-form{
 
 .footer{
   text-align: center;
-  color: #888;
   /* The long padding at the bottom of the footer is so that when
    * items are collapsed the page will (hopefully) not scroll
    * too much padding and a page refresh is weird if you are at the
    * bottom */
   padding: 2rem 2rem 1rem;
 }
+
+.footer-row{
+  color: #888;
+}
+
 
 
 a{

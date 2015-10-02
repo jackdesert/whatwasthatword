@@ -56,6 +56,8 @@ TODO
   * Synonyms
   * Use a *reputable* dictionary, that has better and more definitions, like merriam webster
   * Expansion for more info
+  * Get "looking" to show up
+  * Favicon to prevent 404
 
 DONE
 ----
