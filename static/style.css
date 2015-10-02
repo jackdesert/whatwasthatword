@@ -30,6 +30,11 @@ div{
   padding: 0.1rem;
 }
 
+form.search-form{
+  text-align: center;
+  margin: 0.2rem 0 0.5rem;
+}
+
 .word-wrapper{
   padding: 0.6rem 1rem;
 
@@ -170,8 +175,12 @@ button.toggle-additional-dates:before{
 /* Medium and large screens */
 @media screen and (min-width: 510px) {
 
+  h1{
+    font-size: 2rem;
+  }
+
   body{
-    padding: 2rem !important;
+    padding: 1rem;
   }
 
   #content{

@@ -27,12 +27,10 @@ def search_api():
         if not result['headword'].lower() == wordstring.lower():
             # Some results are for compound words that include the headword
             continue
-        if not 'part_of_speech' in result:
-            # Some results do not name a 'part_of_speech' key
-            continue
-
-        part_of_speech = result['part_of_speech']
-
+        if 'part_of_speech' in result:
+            part_of_speech = result['part_of_speech']
+        else:
+            part_of_speech = '???'
 
         headword = result['headword']
 
@@ -51,6 +49,7 @@ def search_api():
             ipa = result['pronunciations'][0]['ipa']
             word_object['pronunciation'] = { 'ipa' : ipa, 'mp3' : mp3 }
 
+    print(json.dumps(word_object))
     word_object_json = json.dumps(word_object)
 
 
@@ -58,7 +57,7 @@ def search_api():
     #    if result['senses']:
     #        resultsWithDefinitions.append(result)
 
-    redisClient.flushall()
+    #redisClient.flushall()
     # Get ip from nginx if available
     #ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
     redisClient.lpush(ip_address, word_object_json)
@@ -72,7 +71,7 @@ def search_api():
 @app.route("/")
 def home_page():
 
-    redisClient.flushall()
+    #redisClient.flushall()
     words_in_redis = redisClient.lrange(ip_address, 0, 10)
     toString = lambda x : x.decode('utf-8')
     words_in_redis_strings = list(map(toString, words_in_redis))

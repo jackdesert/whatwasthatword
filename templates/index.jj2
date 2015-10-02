@@ -46,8 +46,14 @@
                         type: 'POST',
                         data: jsonData,
                         success: function(data) {
-                            alert('hi')
-                            //this.setState({data: data})
+                            if (Object.keys(data.parts_of_speech).length === 0){
+                                // Don't do anything if word not found
+                                alert('"' + data.word + '" not found')
+                                return
+                            }
+                            var copy = JSON.parse(JSON.stringify(this.state.data))
+                            copy.unshift(data)
+                            this.setState({data: copy})
                         }.bind(this),
                         error: function(xhr, status, err) {
                             console.error(this.props.url, status, err.toString())
@@ -78,7 +84,7 @@
                 },
                 render: function() {
                     return (
-                        <form className="searchForm" onSubmit={this.handleSubmit}>
+                        <form className="search-form" onSubmit={this.handleSubmit}>
                             <input type="text" placeholder="Which word?" ref="text" />
                             <input type="submit" value="Grok" />
                         </form>

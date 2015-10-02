@@ -49,3 +49,14 @@ TODO
   * Play mp3 inline
   * Report to Pearson that their mp3s only load half the time with error:
     "Server error: The difference between the request time and the current time is too large."
+  * Teach it to show "Vietnam" (capitalized) when searching for "vietnam" (lowercase)
+  * sheesh
+  * crimeny
+  * yikes
+  * Synonyms
+  * Use a *reputable* dictionary, that has better and more definitions, like merriam webster
+  * Expansion for more info
+
+DONE
+----
+  * Do something sensible when searching for the word "vietnam", which has no part_of_speech
