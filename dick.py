@@ -13,6 +13,12 @@ def hello():
     return "Basic"
 
 
+@app.route("/api/search", methods=['POST'])
+def search():
+    text = "{\"text\":\"the API says hello\"}"
+    #return text, 201, {'Content-Type': 'application/json; charset=utf-8'}
+    return text
+
 @app.route("/<wordstring>")
 def printWord(wordstring):
     url = "https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=%s&apikey=bxM09RSxa7VFkARAAYJJ8XSw4XXavRsu" % wordstring
@@ -67,7 +73,7 @@ def printWord(wordstring):
     #    if result['senses']:
     #        resultsWithDefinitions.append(result)
 
-    #redisClient.flushall()
+    redisClient.flushall()
     # Get ip from nginx if available
     ip_address = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
     redisClient.lpush(ip_address, word_object_json)

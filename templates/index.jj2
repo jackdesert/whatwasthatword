@@ -7,6 +7,7 @@
         <link href='{{ url_for('static', filename='style.css') }}' rel='stylesheet' type='text/css'>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     </head>
     <body>
@@ -36,13 +37,54 @@
                     return {data: {{data}} };
                 },
 
+                handleSearchSubmit: function(searchText) {
+                    var existingWords = this.state.data
+                    //var newComments = comments.concat([comment])
+                    $.ajax({
+                        url: this.props.url,
+                        dataType: 'json',
+                        type: 'POST',
+                        data: { 'word':searchText },
+                        success: function(data) {
+                            alert('hi')
+                            //this.setState({data: data})
+                        }.bind(this),
+                        error: function(xhr, status, err) {
+window.ee = this
+window.eee = err
+window.eeee = status
+                            console.error(this.props.url, status, err.toString())
+                        }.bind(this)
+                    })
+                },
+
                 render: function() {
-                    window.ee = this
                     return (
                         <div className="wrapper">
                             <h1>WhatWasThatWord?</h1>
+                            <SearchForm onSearchSubmit={this.handleSearchSubmit} />
                             <WordList data={this.state.data}/>
                         </div>
+                    )
+                }
+            })
+
+            var SearchForm = React.createClass({
+                handleSubmit: function(e) {
+                    e.preventDefault()
+                    var text = React.findDOMNode(this.refs.text).value.trim()
+                    if (!text) {
+                      return
+                    }
+                    this.props.onSearchSubmit({text: text})
+                    React.findDOMNode(this.refs.text).value = ''
+                },
+                render: function() {
+                    return (
+                        <form className="searchForm" onSubmit={this.handleSubmit}>
+                            <input type="text" placeholder="Which word?" ref="text" />
+                            <input type="submit" value="Grok" />
+                        </form>
                     )
                 }
             })
@@ -123,7 +165,7 @@
             var data2 = [{'word':'Hello', 'pronunciation':{'ipa':'whee', 'mp3':'yess.mp3'}}]
 
             React.render(
-              <WholePage />,
+              <WholePage url="/api/search" />,
               document.getElementById('content')
             )
         </script>
