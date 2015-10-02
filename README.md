@@ -1,43 +1,57 @@
 Dick
 ====
 
-Dick:
-
-  * Isn't very smart
-  * Uses the dictionary A LOT
-  * Doesn't learn the word by only looking it up once
-  * Wants a place that remembers what he looked up yesterday, and the day before, like a study list
+Dick is a dictionary app that doubles as a vocabulary list.
 
 
-Imagine this User Experience:
+Live on the Web
+---------------
+
+http://whatwasthatword.com
 
 
+Technologies
+------------
 
-    --------------------------   ----------
-    |   type next word here   |  | Search |
-    --------------------------   ----------
-
-    enrich: improve or enhance the quality or value of
-
-    PREVIOUS WORDS:
-
-        gaggle: a flock of geese
-        noise: a sound, especially one that is loud or unpleasant or that causes disturbance
-        petulant: (of a person or their manner) childishly sulky or bad-tempered
-        obstinate: stubbornly refusing to change one's opinion or chosen course of action...
-        nirvana: (in Buddhism) a transcendent state in which there is neither suffering...
+    back-end:  Python, Flask, Redis
+    front-end: ReactJS
+    API:       Pearson Dictionary API
 
 
+No Login Required
+-----------------
 
-Notes on User Experience:
+No login is required. Users are differentiated by their public IP address.
 
-  * cursor automatically focuses in search box
-  * enter key submits search
-  * "enrich" is the word you just looked up
-  * previous words are listed in reverse chronological order of when they were searched
-  * successive searches load without page load
-  * each definition starts minimized (12 word maximum or so), but can be expanded for full definition
+Documentation
+-------------
 
+Additional documentation, including API payloads and rationale for design decisions
+available in doc/
+
+    cd doc/
+
+
+Deployment
+----------
+
+Install python, pip, and required python modules:
+
+    sudo apt-get install -y redis-server python3 python3-pip easy_install
+    sudo pip3 install flask livereload requests redis
+
+If using in production, configure Nginx
+
+    cd dict/
+    vi config/dick-nginx.conf  # Set the server names you wish to use
+    sudo ln -s config/dick-nginx.conf /usr/local/nginx/conf/sites-enabled/dick-nginx.conf
+    sudo nginx -s reload
+
+Start Dick
+
+    python3 dick.py
+
+Point your browser to localhost:3956
 
 
 TODO
