@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>What Was That Word?</title>
+        <title>Dickshunary</title>
         <link href='{{ url_for('static', filename='reset.css') }}' rel='stylesheet' type='text/css'>
         <link href='{{ url_for('static', filename='style.css') }}' rel='stylesheet' type='text/css'>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
@@ -178,7 +178,7 @@
             </div>
 
             <div class='footer-row'>
-                Source Code: <a href='https://github.com/jackdesert/dick' target='_blank'>here</a>
+                Source Code: <a href='https://github.com/jackdesert/dickshunary' target='_blank'>here</a>
             </div>
         </footer>
     </body>
