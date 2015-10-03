@@ -37,6 +37,7 @@ Deployment
 
 Install python, pip, and required python modules:
 
+    sudo apt-get build-dep -y python3-lxml
     sudo apt-get install -y redis-server python3 python3-pip easy_install
     sudo pip3 install flask livereload requests redis
 
