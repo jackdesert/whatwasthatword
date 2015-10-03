@@ -127,10 +127,24 @@
                     var partsOfSpeech = keys.map(function(key){
                         var individualEntries = pos[key].map(function(entry){
                             console.log('entry: ', entry)
+                            var example, synonyms
+                            if (entry.example){
+                                example = <div className="example">&quot;{entry.example}&quot;</div>
+                            }else{
+                                example = null
+                            }
+
+                            if (entry.synonyms){
+                                synonyms = <div className="synonyms">{entry.synonyms.join(", ")}</div>
+                            }else{
+                                synonyms = null
+                            }
+
                             return (
                                 <div className="part-of-speech-contents">
                                     <div className="definition">{entry.definition}</div>
-                                    <div className="example">&quot;{entry.example}&quot;</div>
+                                    {example}
+                                    {synonyms}
                                 </div>
                             )
                         })
