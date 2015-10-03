@@ -128,16 +128,18 @@
                         var individualEntries = pos[key].map(function(entry){
                             console.log('entry: ', entry)
                             return (
-                                <div className="part-of-speech-wrapper">
-                                    <div className="part-of-speech">{key}</div>
-                                    <div className="part-of-speech-contents">
-                                        <div className="definition">{entry.definition}</div>
-                                        <div className="example">&quot;{entry.example}&quot;</div>
-                                    </div>
+                                <div className="part-of-speech-contents">
+                                    <div className="definition">{entry.definition}</div>
+                                    <div className="example">&quot;{entry.example}&quot;</div>
                                 </div>
                             )
                         })
-                        return individualEntries
+                        return (
+                            <div className="part-of-speech-wrapper">
+                                <div className="part-of-speech">{key}</div>
+                                {individualEntries}
+                            </div>
+                        )
                     })
 
 
