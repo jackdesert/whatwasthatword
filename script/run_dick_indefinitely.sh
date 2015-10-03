@@ -12,7 +12,7 @@ echo "REMINDER: call this with 'nohup' and a trailing '&'"
 
 while true; do
   cd /home/dev/dick
-  python3 dick.py
+  python3 dick-merriam.py
   sleep 2
   mkdir -p log
   echo "dick restarted `date`" >> log/dick_restart.log

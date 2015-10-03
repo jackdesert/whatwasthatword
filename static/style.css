@@ -10,6 +10,11 @@ div{
   font-weight: bold;
 }
 
+/* Note this is a custom html element */
+it{
+  font-style: italic;
+}
+
 .italic{
   font-style: italic;
 }
@@ -66,10 +71,15 @@ form.search-form{
 
 
 .definition{
+  padding-top: 0.5rem;
+}
+
+.synonym-label{
+  font-style: italic;
+  color: #777;
 }
 
 .example{
-  font-style: italic;
   color: #777;
 }
 

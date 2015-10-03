@@ -37,6 +37,7 @@ Deployment
 
 Install python, pip, and required python modules:
 
+    sudo apt-get build-dep -y python3-lxml
     sudo apt-get install -y redis-server python3 python3-pip easy_install
     sudo pip3 install flask livereload requests redis
 
@@ -57,26 +58,24 @@ Point your browser to localhost:3956
 TODO
 ----
 
-  * Make sure if a word has two definitions under a single part_of_speech, that they both get displayed
-    Which might involve finding a different API provider since Pearsons seems to only give one definition
-    per part_of_speech.
   * Play mp3 inline
-  * Report to Pearson that their mp3s only load half the time with error:
-    "Server error: The difference between the request time and the current time is too large."
-  * Teach it to show "Vietnam" (capitalized) when searching for "vietnam" (lowercase)
-  * what about these words: sheesh, crimeny, yikes
-  * Synonyms
-  * Use a *reputable* dictionary, that has more sophisticated definitions, like merriam webster
+  * return "vietnam" as "Vietnam", but still prefer lower case words if available
   * Expansion for more info?
-  * Get "looking" to show up
   * Great Favicon
-  * Clean up code so most of it lives in a class
   * Show that word is being fetched
   * Autofocus
   * Make prod more robust by not autoreloading
   * Optimize padding breakpoint for android phones
   * Make input bigger on phone
   * Make speaker display correct size android
+  * Add pronunciation and mp3 back in
+  * When I type "looking" I want results for "look", since that is what api returns
+  * If I misspell a word, tell me about it! (currently 500 response). Example: "snoby"
+  * Spellchecker in text box
+  * Clean up the <dt> tag processing to use the elegance of xpath more coherently
+  * When more than one example per definition, show them all. Example: "snobby"
+  * Remove "as" from the definition of "jack", or find out what it is there for
+  * Make it autoplay anything you type
 
 DONE
 ----
@@ -86,3 +85,12 @@ DONE
   * Show more than 10 words
   * Store only 100 words
   * Plain favicon to prevent 404
+  * Clean up code so most of it lives in a class
+  * Use a *reputable* dictionary, that has more sophisticated definitions, like merriam webster
+  * Make sure if a word has two definitions under a single part_of_speech, that they both get displayed
+    Which might involve finding a different API provider since Pearsons seems to only give one definition
+    per part_of_speech.
+  * Synonyms
+  * what about these words: sheesh, crimeny, yikes
+  * "snobby" and "snobbish" need <fw> tag integrated in order to work
+  * "superfluous" needs <d_link> tag integrated to work. Similar to "snobby" above

@@ -77,4 +77,9 @@ A: Because Pearsons had no definition for "rich" or "snobby", in part because of
 Q: Why not use xmltodict?
 A: xmltodict does not preserve the <it> tags that Merriam Webster uses in its examples.
 
+Q: Why not use BeautifulSoup4?
+A: Because it is geared toward html
+
+Q: Why use lxml instead of (c)ElementTree?
+A: Because lxml has full support of xpath 1.0.
 
