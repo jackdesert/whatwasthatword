@@ -13,9 +13,9 @@ http://whatwasthatword.com
 Technologies
 ------------
 
-    back-end:    Python, Flask, Redis
+    back-end:    Python, Flask, Redis, lxml
     front-end:   ReactJS
-    data-source: Pearson Dictionary API
+    data-source: Merriam-Webster (xml) API
 
 
 No Login Required
