@@ -65,6 +65,7 @@
                     return (
                         <div className="wrapper">
                             <h1>WhatWasThatWord?</h1>
+                            <div className="subtitle">A dictionary that remembers words you&rsquo;ve recently needed</div>
                             <SearchForm onSearchSubmit={this.handleSearchSubmit} />
                             <WordList data={this.state.data}/>
                         </div>

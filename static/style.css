@@ -1,5 +1,6 @@
 h1{
   text-align: center;
+  line-height: 1;
 }
 
 div{
@@ -35,10 +36,26 @@ it{
   padding: 0.1rem;
 }
 
+.subtitle{
+  text-align: center;
+  line-height: 1;
+  font-size: 0.9rem;
+}
+
 form.search-form{
   text-align: center;
-  margin: 0.2rem 0 0.5rem;
+  margin: 0.9rem 0 0.5rem;
 }
+
+input[type='text']{
+  font-size: 1.5rem;
+  padding-left: 0.5rem;
+  width: 17rem;
+}
+input[type='submit']{
+  font-size: 1.5rem;
+}
+
 
 .word-wrapper{
   padding: 0.6rem 1rem;

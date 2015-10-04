@@ -77,6 +77,11 @@ TODO
   * Remove "as" from the definition of "jack", or find out what it is there for
   * Make it autoplay anything you type
   * When input is "Run", I want the word to display as "run". When word is "greek", display "Greek"
+  * Allow plurals to be singularized and match
+  * Better pronunciation for Oedipus
+  * Put it in my portfolio
+  * Add a route for /reset that clears words for that user
+  * Get "twirp" to work (twerp works fine)
 
 DONE
 ----
