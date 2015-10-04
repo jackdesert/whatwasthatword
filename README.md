@@ -76,6 +76,7 @@ TODO
   * When more than one example per definition, show them all. Example: "snobby"
   * Remove "as" from the definition of "jack", or find out what it is there for
   * Make it autoplay anything you type
+  * When input is "Run", I want the word to display as "run". When word is "greek", display "Greek"
 
 DONE
 ----

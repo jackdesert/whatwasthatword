@@ -34,7 +34,7 @@ class Word:
             id = entry.get('id')
             # convert "run[2]" to "run"
             id_plain = re.sub('[^a-zA-Z]', '', id)
-            if id_plain == self._headword:
+            if id_plain.lower() == self._headword.lower():
                 self.entries.append(entry)
     def _process_entries(self):
         for entry in self.entries:
