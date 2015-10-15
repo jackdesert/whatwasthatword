@@ -68,9 +68,7 @@ TODO
   * Optimize padding breakpoint for android phones
   * Make input bigger on phone
   * Make speaker display correct size android
-  * Add pronunciation and mp3 back in
   * When I type "looking" I want results for "look", since that is what api returns
-  * If I misspell a word, tell me about it! (currently 500 response). Example: "snoby"
   * Spellchecker in text box
   * Clean up the <dt> tag processing to use the elegance of xpath more coherently
   * When more than one example per definition, show them all. Example: "snobby"
@@ -82,6 +80,7 @@ TODO
   * Put it in my portfolio
   * Add a route for /reset that clears words for that user
   * Get "twirp" to work (twerp works fine)
+  * Fix so that after hitting "back" from listening to mp3, most recent word shows up
 
 DONE
 ----
@@ -100,3 +99,5 @@ DONE
   * what about these words: sheesh, crimeny, yikes
   * "snobby" and "snobbish" need <fw> tag integrated in order to work
   * "superfluous" needs <d_link> tag integrated to work. Similar to "snobby" above
+  * If I misspell a word, tell me about it! (currently 500 response). Example: "snoby"
+  * Add pronunciation and mp3 back in

@@ -8,15 +8,22 @@ class Word:
     MAX_DEFS = 5
     def __init__(self, headword):
         self._headword = headword
-        self._data = { 'word' : headword, 'parts_of_speech' : {}, 'pronunciation': {} }
+        self._data = { 'word' : headword, 'parts_of_speech' : {}, 'pronunciation': {}, 'suggestions': [] }
     def data(self):
         self._run()
         return self._data
     def _run(self):
         self._fetch()
+        self._grab_suggestions()
+        if self._data['suggestions']:
+            # If there are suggestions, there are no definitions, so return
+            return
         self._remove_extraneous_entries()
         self._process_entries()
         self._trim()
+    def _grab_suggestions(self):
+        for suggestion in self.root.xpath('suggestion'):
+            self._data['suggestions'].append(suggestion.text)
     def _trim(self):
         for part_of_speech, array in self._data['parts_of_speech'].items():
             # Only return MAX_DEFS definitions, since sometimes there are a LOT
