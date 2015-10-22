@@ -78,7 +78,6 @@ TODO
   * Allow plurals to be singularized and match
   * Better pronunciation for Oedipus
   * Put it in my portfolio
-  * Add a route for /reset that clears words for that user
   * Get "twirp" to work (twerp works fine)
   * Fix so that after hitting "back" from listening to mp3, most recent word shows up
 
@@ -101,3 +100,4 @@ DONE
   * "superfluous" needs <d_link> tag integrated to work. Similar to "snobby" above
   * If I misspell a word, tell me about it! (currently 500 response). Example: "snoby"
   * Add pronunciation and mp3 back in
+  * Add a route for /reset that clears words for that user

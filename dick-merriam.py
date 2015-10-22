@@ -25,6 +25,13 @@ def search_api():
     print(word_data)
     return word_data_json
 
+@app.route("/forget")
+def forget_words():
+    shared_session_id = session_id()
+    REDIS_CLIENT.delete(shared_session_id)
+    return redirect('/')
+
+
 @app.route("/")
 def home_page():
 
@@ -42,19 +49,20 @@ def home_page():
         # Redirect to the root so it looks better to user
         response = make_response(redirect('/'))
     else:
-        response = make_response(render_template('index.jj2', data=data))
+        join_url = '%s?shared_session_id=%s' % (request.url_root, shared_session_id)
+        response = make_response(render_template('index.jj2', data=data, join_url=join_url))
 
     # Note that we are setting the shared session id even
     # if it is not changing.
     response.set_cookie('shared_session_id', shared_session_id)
     return response
 
-def shared_session_id():
-    # Use ip address passed from nginx if available
-    #
-    # GOTCHA: Make sure you call this method with (),
-    # or the function will be shoved into redis instead of the ip address
-    return request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+#   def ip_address():
+#       # Use ip address passed from nginx if available
+#       #
+#       # GOTCHA: Make sure you call this method with (),
+#       # or the function will be shoved into redis instead of the ip address
+#       return request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
 def session_id():
     # There are three ways to get a shared_session_id
