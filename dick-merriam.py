@@ -1,6 +1,6 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, make_response
 from livereload import Server as LiveReloadServer
-import requests, redis, json
+import requests, redis, json, uuid
 from word import Word
 app = Flask(__name__)
 
@@ -15,39 +15,48 @@ def search_api():
     word_data_json = json.dumps(word_data)
 
     if word_data['parts_of_speech']:
-        REDIS_CLIENT.lpush(ip_address(), word_data_json)
+        shared_session_id = session_id()
+        REDIS_CLIENT.lpush(shared_session_id, word_data_json)
         # Limit how many records a given user can store
-        REDIS_CLIENT.ltrim(ip_address(), 0, MAX_STORAGE_INDEX)
+        REDIS_CLIENT.ltrim(shared_session_id, 0, MAX_STORAGE_INDEX)
 
     # TODO Return an error explicitly if no parts_of_speech
     # TODO so that the error checking is cleaner on the EcmaScript end
     print(word_data)
     return word_data_json
 
-
-
-
 @app.route("/")
 def home_page():
 
+    shared_session_id = session_id()
+
     #REDIS_CLIENT.flushall()
-    words_in_redis = REDIS_CLIENT.lrange(ip_address(), 0, MAX_STORAGE_INDEX)
+    words_in_redis = REDIS_CLIENT.lrange(shared_session_id, 0, MAX_STORAGE_INDEX)
     toString = lambda x : x.decode('utf-8')
     words_in_redis_strings = list(map(toString, words_in_redis))
     data = []
     for entry in words_in_redis_strings:
         data.append(json.loads(entry))
 
-    return render_template('index.jj2', data=data)
+    response = make_response(render_template('index.jj2', data=data))
+    # Note that we are setting the shared session id even
+    # if it is not changing.
+    response.set_cookie('shared_session_id', shared_session_id)
+    return response
 
-
-def ip_address():
+def shared_session_id():
     # Use ip address passed from nginx if available
     #
     # GOTCHA: Make sure you call this method with (),
     # or the function will be shoved into redis instead of the ip address
     return request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
+def session_id():
+    # There are three ways to get a shared_session_id
+    id_from_params = request.args.get('shared_session_id')
+    id_from_cookie = request.cookies.get('shared_session_id')
+    id_freshly_minted = uuid.uuid1().hex
+    return id_from_params or id_from_cookie or id_freshly_minted
 
 if __name__ == "__main__":
     # enable debug so errors will be displayed, and so new code will be reloaded
