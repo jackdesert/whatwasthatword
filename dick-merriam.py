@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, make_response
+from flask import Flask, request, render_template, make_response, url_for, redirect
 from livereload import Server as LiveReloadServer
 import requests, redis, json, uuid
 from word import Word
@@ -38,7 +38,12 @@ def home_page():
     for entry in words_in_redis_strings:
         data.append(json.loads(entry))
 
-    response = make_response(render_template('index.jj2', data=data))
+    if request.query_string:
+        # Redirect to the root so it looks better to user
+        response = make_response(redirect('/'))
+    else:
+        response = make_response(render_template('index.jj2', data=data))
+
     # Note that we are setting the shared session id even
     # if it is not changing.
     response.set_cookie('shared_session_id', shared_session_id)
