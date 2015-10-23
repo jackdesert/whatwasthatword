@@ -31,6 +31,20 @@ def forget_words():
     REDIS_CLIENT.delete(shared_session_id)
     return redirect('/')
 
+@app.route("/forget_single/<wordstring>")
+def forget_single_word(wordstring):
+    shared_session_id = session_id()
+    words_in_redis = REDIS_CLIENT.lrange(shared_session_id, 0, MAX_STORAGE_INDEX)
+
+    found = 0
+
+    for word_in_redis in words_in_redis:
+        word_decoded = word_in_redis.decode('utf-8')
+        entry = json.loads(word_decoded)
+        if entry['word'] == wordstring:
+            REDIS_CLIENT.lrem(shared_session_id, word_decoded)
+            found += 1
+    return "Removed %d instances of %s" % (found, wordstring)
 
 @app.route("/")
 def home_page():

@@ -54,6 +54,9 @@ class Word:
         # <sx>  SYNONYMOUS CROSS REF TARGET
         # <pr>  PRONUNCIATION
 
+        if not entry.xpath('fl'):
+            # This is a hack to make search for the word "were" functional
+            return
         part_of_speech = entry.xpath('fl')[0].text
         defining_texts = entry.xpath('def/dt')
 
@@ -106,4 +109,6 @@ class Word:
                 dt_data['synonyms'] = synonyms
             definitions.append(dt_data)
 
+        # Note that Merriam seems to never have two entries with
+        # the same wordstring and the same part of speech
         self._data['parts_of_speech'][part_of_speech] = definitions

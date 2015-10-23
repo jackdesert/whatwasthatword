@@ -80,6 +80,7 @@ TODO
   * Put it in my portfolio
   * Get "twirp" to work (twerp works fine)
   * Fix so that after hitting "back" from listening to mp3, most recent word shows up
+  * Get "were" to work (definition is buried in the etymology,
 
 DONE
 ----
