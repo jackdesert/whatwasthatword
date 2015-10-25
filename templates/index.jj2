@@ -169,6 +169,7 @@
 
                     return (
                         <div className={ toggle.toggle('word-wrapper') }>
+                            <div className="close-button" data-the-word={this.props.entry.word}><a href="/">x</a></div>
                             <div className="the-word">
                                 {this.props.entry.word}
                             </div>
@@ -197,6 +198,21 @@
               <WholePage url="/api/search" />,
               document.getElementById('content')
             )
+
+            $('.close-button').on('click', function(event){
+                event.preventDefault()
+                $.ajax({
+                    url: '/forget_single/' + event.currentTarget.dataset.theWord,
+                    type: 'DELETE',
+                    success: function(data) {
+                        console.log('hi')
+                    }.bind(this),
+                    error: function(xhr, status, err) {
+                        console.error(this.props.url, status, err.toString())
+                    }.bind(this)
+                })
+            })
+
         </script>
         <div class='footer'>
             <div class='footer-row'>

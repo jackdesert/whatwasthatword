@@ -59,6 +59,7 @@ input[type='submit']{
 
 .word-wrapper{
   padding: 0.6rem 1rem;
+  position: relative;
 
 }
 
@@ -72,6 +73,13 @@ input[type='submit']{
 
 .word-wrapper + .word-wrapper{
   /* border-top: 3px solid #aaa; */
+}
+
+.word-wrapper .close-button{
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 2rem;
 }
 
 .the-word{
