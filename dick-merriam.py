@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, make_response, url_for, redirect
 from livereload import Server as LiveReloadServer
-import requests, redis, json, uuid
+import requests, redis, json, uuid, datetime
 from word import Word
 app = Flask(__name__)
 
@@ -66,9 +66,11 @@ def home_page():
         join_url = '%s?shared_session_id=%s' % (request.url_root, shared_session_id)
         response = make_response(render_template('index.jj2', data=data, join_url=join_url))
 
+    # Set the expiration far into the future
+    expires = datetime.datetime(3000, 1, 1)
     # Note that we are setting the shared session id even
     # if it is not changing.
-    response.set_cookie('shared_session_id', shared_session_id)
+    response.set_cookie('shared_session_id', shared_session_id, expires=expires)
     return response
 
 #   def ip_address():
