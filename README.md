@@ -1,7 +1,7 @@
-Dick
-====
+What Was that Word
+==================
 
-Dick is a dictionary app that doubles as a vocabulary list.
+What Was that Word is a dictionary app that doubles as a vocabulary list.
 
 
 Live on the Web
@@ -37,20 +37,22 @@ Deployment
 
 Install python, pip, and required python modules:
 
+    # Build Dependencies
     sudo apt-get build-dep -y python3-lxml
-    sudo apt-get install -y redis-server python3 python3-pip easy_install
+    # Install
+    sudo apt-get install -y redis-server python3 python3-pip python-setuptools
     sudo pip3 install flask livereload requests redis lxml
 
 If using in production, configure Nginx
 
-    cd dict/
-    vi config/dick-nginx.conf  # Set the server names you wish to use
-    sudo ln -s config/dick-nginx.conf /usr/local/nginx/conf/sites-enabled/dick-nginx.conf
+    cd what-was-that-word/
+    vi config/that-word-nginx.conf  # Set the server names you wish to use
+    sudo ln -s config/that-word-nginx.conf /usr/local/nginx/conf/sites-enabled/that-word-nginx.conf
     sudo nginx -s reload
 
-Start Dick
+Start that-word
 
-    python3 dick.py
+    python3 that-word.py
 
 Point your browser to localhost:3956
 

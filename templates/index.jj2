@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Dickshunary</title>
+        <title>What Was that Word?</title>
         <link href='{{ url_for('static', filename='reset.css') }}' rel='stylesheet' type='text/css'>
         <link href='{{ url_for('static', filename='style.css') }}' rel='stylesheet' type='text/css'>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.js"></script>
@@ -220,7 +220,7 @@
             </div>
 
             <div class='footer-row'>
-                Source Code: <a href='https://github.com/jackdesert/dickshunary' target='_blank'>here</a>
+                Source Code: <a href='https://github.com/jackdesert/what-was-that-word' target='_blank'>here</a>
             </div>
 
             <div class='footer-row'>
