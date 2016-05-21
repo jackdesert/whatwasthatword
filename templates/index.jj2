@@ -205,7 +205,8 @@
                     url: '/forget_single/' + event.currentTarget.dataset.theWord,
                     type: 'DELETE',
                     success: function(data) {
-                        console.log('hi')
+                        // Hide this word locally (ideally we would re-stripe also)
+                        $(event.currentTarget).parents('.word-wrapper').hide()
                     }.bind(this),
                     error: function(xhr, status, err) {
                         console.error(this.props.url, status, err.toString())
