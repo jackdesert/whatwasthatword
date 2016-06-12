@@ -42,6 +42,32 @@ Install python, pip, and required python modules:
     # Install
     sudo apt-get install -y redis-server python3 python3-pip python-setuptools
     sudo pip3 install flask livereload requests redis lxml
+    npm install --save-dev babel-cli babel-preset-react
+
+
+Development Mode
+----------------
+
+
+*Edit* files in jsx/
+Run `babel` to generate files in static/
+
+
+In development mode:
+
+  * JavaScript libraries are served from local disk
+  * Code is loaded automatically when it changes
+  * LiveReload is automatically activated
+
+    cd what-was-that-word/
+    babel --presets react --watch jsx/ --out-dir static/
+    python3 that-word.py
+
+Point your browser to localhost:3956
+
+
+Production Mode
+---------------
 
 If using in production, configure Nginx
 

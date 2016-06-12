@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, make_response, url_for, redirect
 from livereload import Server as LiveReloadServer
-import requests, redis, json, uuid, datetime
+import requests, redis, json, uuid, datetime, os
 from word import Word
 app = Flask(__name__)
 
@@ -87,13 +87,30 @@ def session_id():
     id_freshly_minted = uuid.uuid1().hex
     return id_from_params or id_from_cookie or id_freshly_minted
 
+
+def production():
+    key = 'FLASK_ENV'
+    if key in os.environ and os.environ[key] == 'production':
+        return True
+    return False
+
+
 if __name__ == "__main__":
-    # enable debug so errors will be displayed, and so new code will be reloaded
-    app.debug = True
-    #app.run('0.0.0.0')
-
-    # app is a Flask object
-
-    server = LiveReloadServer(app.wsgi_app)
-    # server.watch
-    server.serve(port=3956, host='0.0.0.0')
+    port = 3956
+    host = '0.0.0.0'
+    if production():
+        print('Starting in Production mode')
+        app.run(port=port, host=host)
+    else:
+        # Setting app.debug = true makes it so errors are displayed,
+        # and makes it so code changes are automatically reloaded
+        print('Starting in Development mode')
+        app.debug = True
+        server = LiveReloadServer(app.wsgi_app)
+        # List explicitly which files to watch
+        # This way the database is not also watched
+        server.watch('templates/*')
+        server.watch('static/*')
+        server.watch('*.py')
+        server.watch('*.csv')
+        server.serve(port=port, host=host)
