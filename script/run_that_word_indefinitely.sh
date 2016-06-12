@@ -12,7 +12,7 @@ echo "REMINDER: call this with 'nohup' and a trailing '&'"
 
 while true; do
   cd /home/dev/what-was-that-word
-  python3 that-word.py
+  FLASK_ENV=production python3 that-word.py
   sleep 2
   mkdir -p log
   echo "that-word restarted `date`" >> log/that_word_restart.log
