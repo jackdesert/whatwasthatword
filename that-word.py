@@ -94,6 +94,18 @@ def production():
         return True
     return False
 
+@app.context_processor
+def add_template_helpers():
+    # https://gist.github.com/rduplain/1309522
+    # You could simply inject the result of get_endpoint_args.
+    # But in my experience, it's easier to read templates which use functions
+    # and filters than to inject variables into the global context.
+    #
+    # This is especially important for helper functions or context variables
+    # which require a lot of work, as the context processor is run on each call
+    # to render_template.
+    return dict(production=production())
+
 
 if __name__ == "__main__":
     port = 3956
