@@ -42,6 +42,10 @@ Install python, pip, and required python modules:
     # Install
     sudo apt-get install -y redis-server python3 python3-pip python-setuptools
     sudo pip3 install flask livereload requests redis lxml
+
+    # This next line was only required the first time---
+    # Now those librarie are saved in source code so no need to
+    # reinstall them
     npm install --save-dev babel-cli babel-preset-react
 
 

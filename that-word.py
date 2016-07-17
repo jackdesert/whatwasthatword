@@ -46,6 +46,15 @@ def forget_single_word(wordstring):
             found += 1
     return "Removed %d instances of %s" % (found, wordstring)
 
+@app.route("/<shared_session_id>")
+def store_cookie_and_redirect(shared_session_id):
+    # Redirect to the root so it looks better to user
+    response = make_response(redirect('/'))
+
+    set_shared_session_id_cookie(response, shared_session_id)
+
+    return response
+
 @app.route("/")
 def home_page():
 
@@ -59,18 +68,11 @@ def home_page():
     for entry in words_in_redis_strings:
         data.append(json.loads(entry))
 
-    if request.query_string:
-        # Redirect to the root so it looks better to user
-        response = make_response(redirect('/'))
-    else:
-        join_url = '%s?shared_session_id=%s' % (request.url_root, shared_session_id)
-        response = make_response(render_template('index.jj2', data=data, join_url=join_url))
+    join_url = '%s%s' % (request.url_root, shared_session_id)
+    response = make_response(render_template('index.jj2', data=data, join_url=join_url))
 
-    # Set the expiration far into the future
-    expires = datetime.datetime(3000, 1, 1)
-    # Note that we are setting the shared session id even
-    # if it is not changing.
-    response.set_cookie('shared_session_id', shared_session_id, expires=expires)
+    set_shared_session_id_cookie(response, shared_session_id)
+
     return response
 
 #   def ip_address():
@@ -80,12 +82,17 @@ def home_page():
 #       # or the function will be shoved into redis instead of the ip address
 #       return request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
+def set_shared_session_id_cookie(response, shared_session_id):
+    expires = datetime.datetime(3000, 1, 1)
+    # Note that we are setting the shared session id even
+    # if it is not changing.
+    response.set_cookie('shared_session_id', shared_session_id, expires=expires)
+
 def session_id():
-    # There are three ways to get a shared_session_id
-    id_from_params = request.args.get('shared_session_id')
+    # There are two ways to get a shared_session_id
     id_from_cookie = request.cookies.get('shared_session_id')
     id_freshly_minted = uuid.uuid1().hex
-    return id_from_params or id_from_cookie or id_freshly_minted
+    return id_from_cookie or id_freshly_minted
 
 
 def production():
