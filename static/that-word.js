@@ -62,7 +62,7 @@ var WholePage = React.createClass({
             React.createElement(
                 'div',
                 { className: 'subtitle' },
-                'A dictionary that remembers words you’ve recently needed'
+                'A dictionary that doubles as a vocabulary list'
             ),
             React.createElement(SearchForm, { onSearchSubmit: this.handleSearchSubmit }),
             React.createElement(WordList, { data: this.state.data })

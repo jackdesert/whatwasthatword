@@ -52,7 +52,7 @@ var WholePage = React.createClass({
         return (
             <div className="wrapper">
                 <h1>WhatWasThatWord?</h1>
-                <div className="subtitle">A dictionary that remembers words you&rsquo;ve recently needed</div>
+                <div className="subtitle">A dictionary that doubles as a vocabulary list</div>
                 <SearchForm onSearchSubmit={this.handleSearchSubmit} />
                 <WordList data={this.state.data}/>
             </div>
