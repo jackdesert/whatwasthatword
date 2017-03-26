@@ -1,10 +1,31 @@
-h1{
-  text-align: center;
+/*
+ *      For next time:  Have a javascript HCL color picker pop up so I can see the change in
+ *                      *my design* as I slide the values.
+ *
+color-1: #7a08ab  // hcl(320, 89, 48)
+color-2: #3201c2  // hcl(309, 108, 36)
+color-3: #0123b8  // hcl(280, 69, 45)
+
+
+color-2-desat-3-tint-3: #c78efe;  // hcl(309, 31, 84)
+color-2-desat-3-tint-2: #9e6dce;  // hcl(309, 31, 84)
+*/
+h1, .subtitle{
   line-height: 1;
+  text-align: right;
+}
+
+h1{
+  color:  #7a08ab;
+}
+
+.subtitle{
+  font-size: 0.9rem;
+  color: #7a08ab;
 }
 
 div{
-  color: #222;
+  color: #2b1a3d;
 }
 
 .bold{
@@ -36,26 +57,29 @@ it{
   padding: 0.1rem;
 }
 
-.subtitle{
-  text-align: center;
-  line-height: 1;
-  font-size: 0.9rem;
-}
 
 form.search-form{
-  text-align: center;
-  margin: 0.9rem 0 0.5rem;
+  margin: 4rem 0 1rem;
 }
 
+input{
+  padding: 0.5rem;
+  border: 3px solid #eae2ee;
+  border-radius: 0.2rem;
+}
 input[type='text']{
   font-size: 1.5rem;
   padding-left: 0.5rem;
-  width: 17rem;
+  width: 80%;
+
+  color: #58259f;
 }
 input[type='submit']{
   font-size: 1.5rem;
+  background-color: #7a08ab;
+  color: #eae2ee;
+  float: right;
 }
-
 
 .word-wrapper{
   padding: 0.6rem 1rem;
@@ -64,11 +88,13 @@ input[type='submit']{
 }
 
 .word-wrapper.even{
-  background-color: #e0e0e0;
+  /* background-color: #bf92e9; */
+  background-color: #bf92e9;
 }
 
 .word-wrapper.odd{
-  background-color: #f8f8f8;
+  /* background-color: #efeaf2; */
+  background-color: #f5e7fc;
 }
 
 .word-wrapper + .word-wrapper{
@@ -77,9 +103,10 @@ input[type='submit']{
 
 .word-wrapper .close-button{
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -0.7rem;
+  right: 0.3rem;
   font-size: 2rem;
+  transform: scale(1.4, 1);
 }
 
 .the-word{
@@ -160,7 +187,7 @@ input[type='submit']{
 
 
 a{
-  /* text-decoration: none; */
+  text-decoration: none;
   color: inherit;
 }
 a:hover{
@@ -225,7 +252,7 @@ button.toggle-additional-dates:before{
   #content{
     max-width: 560px;
     margin: 0 auto;
-    padding: 25px;
+    /* padding: 25px; */
   }
 
   .message-or-event{
