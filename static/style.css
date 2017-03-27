@@ -64,13 +64,13 @@ form.search-form{
 
 input{
   padding: 0.5rem;
-  border: 3px solid #eae2ee;
+  border: 0.2rem solid #eae2ee;
   border-radius: 0.2rem;
 }
 input[type='text']{
   font-size: 1.5rem;
   padding-left: 0.5rem;
-  width: 80%;
+  width: 70%;
 
   color: #58259f;
 }
@@ -79,6 +79,7 @@ input[type='submit']{
   background-color: #7a08ab;
   color: #eae2ee;
   float: right;
+  width: 25%;
 }
 
 .word-wrapper{
@@ -98,7 +99,7 @@ input[type='submit']{
 }
 
 .word-wrapper + .word-wrapper{
-  /* border-top: 3px solid #aaa; */
+  /* border-top: 0.2rem solid #aaa; */
 }
 
 .word-wrapper .close-button{
@@ -150,14 +151,14 @@ input[type='submit']{
 }
 
 .pronunciation .mp3 img{
-  width: 15px;
+  width: 1.5rem;
 }
 
 
 .message-or-event{
   position: relative;
   padding: 0.5rem;
-  border: 1px solid #aaa;
+  border: 0.1rem solid #aaa;
   background-color: #fafafa;
   overflow: hidden;
   box-shadow: 0.2rem 0.15rem 0.1rem #888;
@@ -178,6 +179,10 @@ input[type='submit']{
    * too much padding and a page refresh is weird if you are at the
    * bottom */
   padding: 2rem 2rem 1rem;
+}
+
+.footer a{
+  text-decoration: underline;
 }
 
 .footer-row{
@@ -239,7 +244,10 @@ button.toggle-additional-dates:before{
 
 
 /* Medium and large screens */
-@media screen and (min-width: 510px) {
+/* Using cm instead of px because phones have a lot of pixels on the screen---almost as my desktop.
+ * However, the pixels are very tight together.
+ */
+@media  screen and (min-width: 13cm) {
 
   h1{
     font-size: 2rem;
@@ -250,9 +258,8 @@ button.toggle-additional-dates:before{
   }
 
   #content{
-    max-width: 560px;
+    max-width: 40rem;
     margin: 0 auto;
-    /* padding: 25px; */
   }
 
   .message-or-event{
@@ -275,6 +282,5 @@ button.toggle-additional-dates:before{
 
 }
 
-/* Large screens */
-@media screen and (min-width: 1000px) {
-}
+
+
