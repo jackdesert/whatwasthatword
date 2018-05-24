@@ -26,17 +26,24 @@ No login is required. Users are differentiated by a cookie stored during their f
 Take your cookie with you to bridge other browsers together.
 
 
-Documentation
--------------
+Directory Structure
+-------------------
 
-Additional documentation, including API payloads and rationale for design decisions
-available in doc/
+    .babelrc
+    config/
+    doc/          # Documentation, including API payloads and RATIONALE for decisions
+    jsx/          # Edit these jsx files
+    node_modules/ # Node modules are stored in source control to make deployment easy
+    RATIONALE.md  # Why decisions were made
+    README.md
+    bin/          # Executable utilities
+    static/       # JSX files are compiled and output here (Do not edit manually)
+    templates/    # jinja2 templates
+    that-word.py  # Python script that runs site
 
-    cd doc/
 
-
-Deployment
-----------
+Installation
+------------
 
 Install python3, pip3, and required python modules:
 
@@ -49,38 +56,17 @@ Install python3, pip3, and required python modules:
     # Python Modules
     pip3 install --user flask livereload requests redis lxml
 
-    # Npm libraries
-    # This next line was only required the first time---
-    # Now those libraries are saved in source code so no need to
-    # reinstall them
+    # Npm libraries (Skip this if /node_modules and package.json are in git)
+    # See https://babeljs.io/docs/plugins/preset-react/
     npm install --save-dev babel-cli babel-preset-react
 
 
 
-Directory Structure
--------------------
-
-    .babelrc
-    config/
-    doc/
-    jsx/         # Edit these jsx files
-    node_modules/
-    RATIONALE.md
-    README.md
-    script/
-    static/      # JSX files are compiled and dropped here
-    templates/   # jinja2 templates
-    that-word.py # Python script that runs site
-    word.py      # Old version of Python script
 
 
+Development
+-----------
 
-Development Mode
-----------------
-
-
-*Edit* files in jsx/
-Run `babel` as shown below to generate files in static/
 
 
 In development mode:
@@ -89,19 +75,34 @@ In development mode:
   * Code is loaded automatically when it changes
   * LiveReload is automatically activated
 
-    cd what-was-that-word/
-    npx babel --presets react --watch jsx/ --out-dir static/
+    cd whatwasthatword/
+
+    # Start server
     python3 that-word.py
+
+    # Compile changes to jsx files to javascript files
+    npx babel --presets react --watch jsx/ --out-dir static/
 
 Point your browser to localhost:3956
 
 
-Production Mode
----------------
+Commonly Edited Files:
+
+    * jsx/that-word.js
+    * templates/index.jj2
+    * that-word.py
+
+Generated Files (Do Not Edit Manually):
+
+    * static/that-word.js
+
+
+Production Deploy
+-----------------
 
 If using in production, configure Nginx
 
-    cd what-was-that-word/
+    cd whatwasthatword/
     vi config/that-word-nginx.conf  # Set the server names you wish to use
     sudo ln -s config/that-word-nginx.conf /usr/local/nginx/conf/sites-enabled/that-word-nginx.conf
     sudo nginx -s reload
@@ -116,8 +117,6 @@ Point your browser to localhost:3956
 TODO
 ----
 
-  * Get babel running on localhost
-  * Better documentation of how to install babel: first time and every time
   * Clean Python
   * Great README
   * Fix bug where deleting a word change
