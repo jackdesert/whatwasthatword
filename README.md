@@ -40,6 +40,7 @@ Directory Structure
     static/       # JSX files are compiled and output here (Do not edit manually)
     templates/    # jinja2 templates
     that-word.py  # Python script that runs site
+    word.py       # Python class for interacting with dictionary API
 
 
 Installation
@@ -90,6 +91,7 @@ Commonly Edited Files:
 
     * jsx/that-word.js
     * templates/index.jj2
+    * word.py
     * that-word.py
 
 Generated Files (Do Not Edit Manually):
@@ -117,11 +119,17 @@ Point your browser to localhost:3956
 TODO
 ----
 
+  NOTES:  first click on "my" issues page reload instead of REDIS_CLIENT.lrem
+  * Fix bug where deleting a word change
+    - where / is / my / coat
+    - delete "my"
+
+
   * Clean Python
   * Great README
-  * Fix bug where deleting a word change
   * Adapt to run via systemd
   * Better organization of README
+  * Get items to show up in order they were typed in
 
 
   * Play mp3 inline

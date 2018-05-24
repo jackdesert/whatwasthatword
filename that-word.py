@@ -5,6 +5,7 @@ from flask import render_template
 from flask import request
 from flask import url_for
 from livereload import Server as LiveReloadServer
+import pdb
 import requests
 import redis
 import json
@@ -54,6 +55,7 @@ def forget_single_word(wordstring):
         entry = json.loads(word_decoded)
         if entry['word'] == wordstring:
             # Why do we lrem word_decoded, instead of lrem word_blob?
+            pdb.set_trace()
             REDIS_CLIENT.lrem(shared_session_id, word_decoded)
             found += 1
 
@@ -73,7 +75,6 @@ def home_page():
 
     shared_session_id = session_id()
 
-    #REDIS_CLIENT.flushall()
     words_in_redis = REDIS_CLIENT.lrange(shared_session_id, 0, MAX_STORAGE_INDEX)
     toString = lambda x : x.decode('utf-8')
     words_in_redis_strings = list(map(toString, words_in_redis))
@@ -122,7 +123,7 @@ def add_template_helpers():
 
 
 if __name__ == "__main__":
-    port = 3956
+    port = 3900
     host = '0.0.0.0'
     if production():
         print('Starting in Production mode')
