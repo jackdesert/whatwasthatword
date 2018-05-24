@@ -21,7 +21,10 @@ Technologies
 No Login Required
 -----------------
 
-No login is required. Users are differentiated by their public IP address.
+No login is required. Users are differentiated by a cookie stored during their first visit.
+
+Take your cookie with you to bridge other browsers together.
+
 
 Documentation
 -------------
@@ -35,18 +38,41 @@ available in doc/
 Deployment
 ----------
 
-Install python, pip, and required python modules:
+Install python3, pip3, and required python modules:
 
     # Build Dependencies
     sudo apt-get build-dep -y python3-lxml
-    # Install
-    sudo apt-get install -y redis-server python3 python3-pip python-setuptools
-    sudo pip3 install flask livereload requests redis lxml
 
+    # Packages
+    sudo apt-get install -y redis-server python3 python3-pip python3-setuptools
+
+    # Python Modules
+    pip3 install --user flask livereload requests redis lxml
+
+    # Npm libraries
     # This next line was only required the first time---
-    # Now those librarie are saved in source code so no need to
+    # Now those libraries are saved in source code so no need to
     # reinstall them
     npm install --save-dev babel-cli babel-preset-react
+
+
+
+Directory Structure
+-------------------
+
+    .babelrc
+    config/
+    doc/
+    jsx/         # Edit these jsx files
+    node_modules/
+    RATIONALE.md
+    README.md
+    script/
+    static/      # JSX files are compiled and dropped here
+    templates/   # jinja2 templates
+    that-word.py # Python script that runs site
+    word.py      # Old version of Python script
+
 
 
 Development Mode
@@ -54,7 +80,7 @@ Development Mode
 
 
 *Edit* files in jsx/
-Run `babel` to generate files in static/
+Run `babel` as shown below to generate files in static/
 
 
 In development mode:
@@ -64,7 +90,7 @@ In development mode:
   * LiveReload is automatically activated
 
     cd what-was-that-word/
-    babel --presets react --watch jsx/ --out-dir static/
+    npx babel --presets react --watch jsx/ --out-dir static/
     python3 that-word.py
 
 Point your browser to localhost:3956
@@ -89,6 +115,15 @@ Point your browser to localhost:3956
 
 TODO
 ----
+
+  * Get babel running on localhost
+  * Better documentation of how to install babel: first time and every time
+  * Clean Python
+  * Great README
+  * Fix bug where deleting a word change
+  * Adapt to run via systemd
+  * Better organization of README
+
 
   * Play mp3 inline
   * return "vietnam" as "Vietnam", but still prefer lower case words if available

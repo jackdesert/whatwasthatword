@@ -1,7 +1,18 @@
-from flask import Flask, request, render_template, make_response, url_for, redirect
+from flask import Flask
+from flask import make_response
+from flask import redirect
+from flask import render_template
+from flask import request
+from flask import url_for
 from livereload import Server as LiveReloadServer
-import requests, redis, json, uuid, datetime, os
+import requests
+import redis
+import json
+import uuid
+import datetime
+import os
 from word import Word
+
 app = Flask(__name__)
 
 POOL = redis.ConnectionPool(host='localhost', port=6379, db=0)
@@ -38,12 +49,14 @@ def forget_single_word(wordstring):
 
     found = 0
 
-    for word_in_redis in words_in_redis:
-        word_decoded = word_in_redis.decode('utf-8')
+    for word_blob in words_in_redis:
+        word_decoded = word_blob.decode('utf-8')
         entry = json.loads(word_decoded)
         if entry['word'] == wordstring:
+            # Why do we lrem word_decoded, instead of lrem word_blob?
             REDIS_CLIENT.lrem(shared_session_id, word_decoded)
             found += 1
+
     return "Removed %d instances of %s" % (found, wordstring)
 
 @app.route("/<shared_session_id>")
@@ -75,12 +88,6 @@ def home_page():
 
     return response
 
-#   def ip_address():
-#       # Use ip address passed from nginx if available
-#       #
-#       # GOTCHA: Make sure you call this method with (),
-#       # or the function will be shoved into redis instead of the ip address
-#       return request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
 def set_shared_session_id_cookie(response, shared_session_id):
     expires = datetime.datetime(3000, 1, 1)
