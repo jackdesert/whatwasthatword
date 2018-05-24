@@ -1,6 +1,6 @@
 {
   "name": "whatwasthatword",
-  "version": "1.0.0",
+  "version": "0.4.0",
   "description": "A dictionary / vocabulary list that remembers the words you look up",
   "private": true,
   "main": "static/that-word.js",

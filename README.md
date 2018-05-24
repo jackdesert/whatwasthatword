@@ -21,40 +21,53 @@ Technologies
 No Login Required
 -----------------
 
-No login is required. Users are differentiated by their public IP address.
+No login is required. Users are differentiated by a cookie stored during their first visit.
 
-Documentation
--------------
-
-Additional documentation, including API payloads and rationale for design decisions
-available in doc/
-
-    cd doc/
+Take your cookie with you to bridge other browsers together.
 
 
-Deployment
-----------
+Directory Structure
+-------------------
 
-Install python, pip, and required python modules:
+    .babelrc
+    config/
+    doc/          # Documentation, including API payloads and RATIONALE for decisions
+    jsx/          # Edit these jsx files
+    node_modules/ # Node modules are stored in source control to make deployment easy
+    RATIONALE.md  # Why decisions were made
+    README.md
+    bin/          # Executable utilities
+    static/       # JSX files are compiled and output here (Do not edit manually)
+    templates/    # jinja2 templates
+    that-word.py  # Python script that runs site
+    word.py       # Python class for interacting with dictionary API
+
+
+Installation
+------------
+
+Install python3, pip3, and required python modules:
 
     # Build Dependencies
     sudo apt-get build-dep -y python3-lxml
-    # Install
-    sudo apt-get install -y redis-server python3 python3-pip python-setuptools
-    sudo pip3 install flask livereload requests redis lxml
 
-    # This next line was only required the first time---
-    # Now those librarie are saved in source code so no need to
-    # reinstall them
+    # Packages
+    sudo apt-get install -y redis-server python3 python3-pip python3-setuptools
+
+    # Python Modules
+    pip3 install --user flask livereload requests redis lxml
+
+    # Npm libraries (Skip this if /node_modules and package.json are in git)
+    # See https://babeljs.io/docs/plugins/preset-react/
     npm install --save-dev babel-cli babel-preset-react
 
 
-Development Mode
-----------------
 
 
-*Edit* files in jsx/
-Run `babel` to generate files in static/
+
+Development
+-----------
+
 
 
 In development mode:
@@ -63,19 +76,35 @@ In development mode:
   * Code is loaded automatically when it changes
   * LiveReload is automatically activated
 
-    cd what-was-that-word/
-    babel --presets react --watch jsx/ --out-dir static/
+    cd whatwasthatword/
+
+    # Start server
     python3 that-word.py
+
+    # Compile changes to jsx files to javascript files
+    npx babel --presets react --watch jsx/ --out-dir static/
 
 Point your browser to localhost:3956
 
 
-Production Mode
----------------
+Commonly Edited Files:
+
+    * jsx/that-word.js
+    * templates/index.jj2
+    * word.py
+    * that-word.py
+
+Generated Files (Do Not Edit Manually):
+
+    * static/that-word.js
+
+
+Production Deploy
+-----------------
 
 If using in production, configure Nginx
 
-    cd what-was-that-word/
+    cd whatwasthatword/
     vi config/that-word-nginx.conf  # Set the server names you wish to use
     sudo ln -s config/that-word-nginx.conf /usr/local/nginx/conf/sites-enabled/that-word-nginx.conf
     sudo nginx -s reload
@@ -89,6 +118,22 @@ Point your browser to localhost:3956
 
 TODO
 ----
+
+  NOTES:  first click on "my" issues page reload instead of REDIS_CLIENT.lrem
+  * Fix bug where deleting a word change
+    - where / is / my / coat
+    - delete "my"
+  * Either all single or all double quotes
+  * systemd
+
+
+  * Assign stripe colors via css ::even to avoid striping errors on delete
+  * Clean Python
+  * Great README
+  * Adapt to run via systemd
+  * Better organization of README
+  * Get items to show up in order they were typed in
+
 
   * Play mp3 inline
   * return "vietnam" as "Vietnam", but still prefer lower case words if available

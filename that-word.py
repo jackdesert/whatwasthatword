@@ -1,7 +1,19 @@
-from flask import Flask, request, render_template, make_response, url_for, redirect
+from flask import Flask
+from flask import make_response
+from flask import redirect
+from flask import render_template
+from flask import request
+from flask import url_for
 from livereload import Server as LiveReloadServer
-import requests, redis, json, uuid, datetime, os
+import pdb
+import requests
+import redis
+import json
+import uuid
+import datetime
+import os
 from word import Word
+
 app = Flask(__name__)
 
 POOL = redis.ConnectionPool(host='localhost', port=6379, db=0)
@@ -15,14 +27,16 @@ def search_api():
     word_data_json = json.dumps(word_data)
 
     if word_data['parts_of_speech']:
+        print("Adding '%s'" % wordstring)
         shared_session_id = session_id()
         REDIS_CLIENT.lpush(shared_session_id, word_data_json)
         # Limit how many records a given user can store
         REDIS_CLIENT.ltrim(shared_session_id, 0, MAX_STORAGE_INDEX)
+    else:
+        print("Not adding '%s'" % wordstring)
 
     # TODO Return an error explicitly if no parts_of_speech
     # TODO so that the error checking is cleaner on the EcmaScript end
-    print(word_data)
     return word_data_json
 
 @app.route("/forget")
@@ -38,13 +52,16 @@ def forget_single_word(wordstring):
 
     found = 0
 
-    for word_in_redis in words_in_redis:
-        word_decoded = word_in_redis.decode('utf-8')
+    for word_blob in words_in_redis:
+        word_decoded = word_blob.decode('utf-8')
         entry = json.loads(word_decoded)
         if entry['word'] == wordstring:
+            # Why do we lrem word_decoded, instead of lrem word_blob?
             REDIS_CLIENT.lrem(shared_session_id, word_decoded)
             found += 1
-    return "Removed %d instances of %s" % (found, wordstring)
+    msg = "Removed %d instances of %s" % (found, wordstring)
+    print(msg)
+    return msg
 
 @app.route("/<shared_session_id>")
 def store_cookie_and_redirect(shared_session_id):
@@ -60,13 +77,9 @@ def home_page():
 
     shared_session_id = session_id()
 
-    #REDIS_CLIENT.flushall()
     words_in_redis = REDIS_CLIENT.lrange(shared_session_id, 0, MAX_STORAGE_INDEX)
-    toString = lambda x : x.decode('utf-8')
-    words_in_redis_strings = list(map(toString, words_in_redis))
-    data = []
-    for entry in words_in_redis_strings:
-        data.append(json.loads(entry))
+
+    data = [json.loads(w.decode('utf-8')) for w in words_in_redis]
 
     join_url = '%s%s' % (request.url_root, shared_session_id)
     response = make_response(render_template('index.jj2', data=data, join_url=join_url))
@@ -75,12 +88,6 @@ def home_page():
 
     return response
 
-#   def ip_address():
-#       # Use ip address passed from nginx if available
-#       #
-#       # GOTCHA: Make sure you call this method with (),
-#       # or the function will be shoved into redis instead of the ip address
-#       return request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 
 def set_shared_session_id_cookie(response, shared_session_id):
     expires = datetime.datetime(3000, 1, 1)
@@ -104,10 +111,12 @@ def production():
 @app.context_processor
 def add_template_helpers():
     # https://gist.github.com/rduplain/1309522
+    # (These notes from that website)
     # You could simply inject the result of get_endpoint_args.
     # But in my experience, it's easier to read templates which use functions
     # and filters than to inject variables into the global context.
     #
+    # (These notes also from that website)
     # This is especially important for helper functions or context variables
     # which require a lot of work, as the context processor is run on each call
     # to render_template.
@@ -115,7 +124,7 @@ def add_template_helpers():
 
 
 if __name__ == "__main__":
-    port = 3956
+    port = 3900
     host = '0.0.0.0'
     if production():
         print('Starting in Production mode')

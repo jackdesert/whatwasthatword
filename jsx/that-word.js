@@ -1,3 +1,13 @@
+// Add a key to each final output div
+var generator = function(){
+    var count = -1,
+        newKey = function(){
+            count += 1
+            return count.toString()
+        }
+    return {newKey: newKey}
+}()
+
 var oddOrEven = function(){
     var state = 'odd'
     var toggle = function(klass){
@@ -28,6 +38,8 @@ var WholePage = React.createClass({
             type: 'POST',
             data: jsonData,
             success: function(data) {
+
+                // Not Found
                 if (Object.keys(data.suggestions).length > 0){
                     var sortedWords = data.suggestions.sort(function (a, b) {
                         return a.toLowerCase().localeCompare(b.toLowerCase())
@@ -38,6 +50,11 @@ var WholePage = React.createClass({
                     alert('Whoops! Nothing found for "' + data.word + '".')
                     return
                 }
+
+                // Found!
+                console.log('submitting ' + JSON.stringify(jsonData))
+
+                // TODO Why make a copy of the data?
                 var copy = JSON.parse(JSON.stringify(this.state.data))
                 copy.unshift(data)
                 this.setState({data: copy})
@@ -84,12 +101,12 @@ var WordList = React.createClass({
     render: function() {
         var entries = this.props.data.map(function(entry){
             return (
-                <Word entry={entry} />
+                <Word entry={entry} key={ generator.newKey() } />
             )
         })
 
         return (
-            <div className="wordList">
+            <div className="wordList" >
               {entries}
             </div>
         )
@@ -121,27 +138,27 @@ var Word = React.createClass({
 
                 var example, synonyms
                 if (entry.example){
-                    example = <div className="example" dangerouslySetInnerHTML={ htmlObject(entry.example) }></div>
+                    example = <div className="example"  dangerouslySetInnerHTML={ htmlObject(entry.example) }></div>
                 }else{
                     example = null
                 }
 
                 if (entry.synonyms){
-                    synonyms = <div className="synonyms"><span className="synonym-label">synonyms:</span> {entry.synonyms.join(", ")}</div>
+                    synonyms = <div className="synonyms" ><span className="synonym-label">synonyms:</span> {entry.synonyms.join(", ")}</div>
                 }else{
                     synonyms = null
                 }
 
                 return (
-                    <div className="part-of-speech-contents">
-                        <div className="definition" dangerouslySetInnerHTML={ htmlObject(entry.definition) }></div>
+                    <div className="part-of-speech-contents"  key={ generator.newKey() }>
+                        <div className="definition" key={ generator.newKey() } dangerouslySetInnerHTML={ htmlObject(entry.definition) }></div>
                         {example}
                         {synonyms}
                     </div>
                 )
             })
             return (
-                <div className="part-of-speech-wrapper">
+                <div className="part-of-speech-wrapper"  key={ generator.newKey() }>
                     <div className="part-of-speech">{key}</div>
                     {individualEntries}
                 </div>
@@ -150,8 +167,8 @@ var Word = React.createClass({
 
 
         return (
-            <div className={ toggle.toggle('word-wrapper') }>
-                <div className="close-button" data-the-word={this.props.entry.word}><a href="/">x</a></div>
+            <div className={ toggle.toggle('word-wrapper') } >
+                <div className="close-button" data-the-word={this.props.entry.word}><a href="#a-swing-and-miss!">x</a></div>
                 <div className="the-word">
                     {this.props.entry.word}
                 </div>
@@ -174,20 +191,26 @@ var Word = React.createClass({
 })
 
 // Note the React.render call needs to come after other things are defined.
-var data2 = [{'word':'Hello', 'pronunciation':{'ipa':'whee', 'mp3':'yess.mp3'}}]
+// var sample_data = [{'word':'Hello', 'pronunciation':{'ipa':'whee', 'mp3':'yess.mp3'}}]
 
 React.render(
   <WholePage url="/api/search" />,
   document.getElementById('content')
 )
 
-$('.close-button').on('click', function(event){
+// Call "on" from $('#content
+$('#content').on('click', '.close-button', function(event){
+    var url = '/forget_single/' + event.currentTarget.dataset.theWord
+    console.log('Clicked Delete for url ' + url)
     event.preventDefault()
     $.ajax({
-        url: '/forget_single/' + event.currentTarget.dataset.theWord,
+        url: url,
         type: 'DELETE',
         success: function(data) {
-            // Hide this word locally (ideally we would re-stripe also)
+            // TODO Delete word from wordData and call React.render
+            // so striping will match
+
+            // Hide this word locally
             $(event.currentTarget).parents('.word-wrapper').hide()
         }.bind(this),
         error: function(xhr, status, err) {

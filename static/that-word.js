@@ -1,3 +1,13 @@
+// Add a key to each final output div
+var generator = function () {
+    var count = -1,
+        newKey = function () {
+        count += 1;
+        return count.toString();
+    };
+    return { newKey: newKey };
+}();
+
 var oddOrEven = function () {
     var state = 'odd';
     var toggle = function (klass) {
@@ -30,6 +40,8 @@ var WholePage = React.createClass({
             type: 'POST',
             data: jsonData,
             success: function (data) {
+
+                // Not Found
                 if (Object.keys(data.suggestions).length > 0) {
                     var sortedWords = data.suggestions.sort(function (a, b) {
                         return a.toLowerCase().localeCompare(b.toLowerCase());
@@ -40,6 +52,11 @@ var WholePage = React.createClass({
                     alert('Whoops! Nothing found for "' + data.word + '".');
                     return;
                 }
+
+                // Found!
+                console.log('submitting ' + JSON.stringify(jsonData));
+
+                // TODO Why make a copy of the data?
                 var copy = JSON.parse(JSON.stringify(this.state.data));
                 copy.unshift(data);
                 this.setState({ data: copy });
@@ -97,7 +114,7 @@ var WordList = React.createClass({
 
     render: function () {
         var entries = this.props.data.map(function (entry) {
-            return React.createElement(Word, { entry: entry });
+            return React.createElement(Word, { entry: entry, key: generator.newKey() });
         });
 
         return React.createElement(
@@ -155,15 +172,15 @@ var Word = React.createClass({
 
                 return React.createElement(
                     'div',
-                    { className: 'part-of-speech-contents' },
-                    React.createElement('div', { className: 'definition', dangerouslySetInnerHTML: htmlObject(entry.definition) }),
+                    { className: 'part-of-speech-contents', key: generator.newKey() },
+                    React.createElement('div', { className: 'definition', key: generator.newKey(), dangerouslySetInnerHTML: htmlObject(entry.definition) }),
                     example,
                     synonyms
                 );
             });
             return React.createElement(
                 'div',
-                { className: 'part-of-speech-wrapper' },
+                { className: 'part-of-speech-wrapper', key: generator.newKey() },
                 React.createElement(
                     'div',
                     { className: 'part-of-speech' },
@@ -181,7 +198,7 @@ var Word = React.createClass({
                 { className: 'close-button', 'data-the-word': this.props.entry.word },
                 React.createElement(
                     'a',
-                    { href: '/' },
+                    { href: '#a-swing-and-miss!' },
                     'x'
                 )
             ),
@@ -216,17 +233,23 @@ var Word = React.createClass({
 });
 
 // Note the React.render call needs to come after other things are defined.
-var data2 = [{ 'word': 'Hello', 'pronunciation': { 'ipa': 'whee', 'mp3': 'yess.mp3' } }];
+// var sample_data = [{'word':'Hello', 'pronunciation':{'ipa':'whee', 'mp3':'yess.mp3'}}]
 
 React.render(React.createElement(WholePage, { url: '/api/search' }), document.getElementById('content'));
 
-$('.close-button').on('click', function (event) {
+// Call "on" from $('#content
+$('#content').on('click', '.close-button', function (event) {
+    var url = '/forget_single/' + event.currentTarget.dataset.theWord;
+    console.log('Clicked Delete for url ' + url);
     event.preventDefault();
     $.ajax({
-        url: '/forget_single/' + event.currentTarget.dataset.theWord,
+        url: url,
         type: 'DELETE',
         success: function (data) {
-            // Hide this word locally (ideally we would re-stripe also)
+            // TODO Delete word from wordData and call React.render
+            // so striping will match
+
+            // Hide this word locally
             $(event.currentTarget).parents('.word-wrapper').hide();
         }.bind(this),
         error: function (xhr, status, err) {
