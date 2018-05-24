@@ -1,0 +1,33 @@
+{
+  "name": "whatwasthatword",
+  "version": "1.0.0",
+  "description": "A dictionary / vocabulary list that remembers the words you look up",
+  "private": true,
+  "main": "static/that-word.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react": "^6.24.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackdesert/whatwasthatword.git"
+  },
+  "keywords": [
+    "dictionary",
+    "vocabulary-list",
+    "merriam-webster"
+  ],
+  "author": "Jack Desert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jackdesert/whatwasthatword/issues"
+  },
+  "homepage": "https://github.com/jackdesert/whatwasthatword#readme"
+}
