@@ -123,6 +123,7 @@ TODO
   * Fix bug where deleting a word change
     - where / is / my / coat
     - delete "my"
+  * Either all single or all double quotes
 
 
   * Clean Python

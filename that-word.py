@@ -27,14 +27,16 @@ def search_api():
     word_data_json = json.dumps(word_data)
 
     if word_data['parts_of_speech']:
+        print("Adding '%s'" % wordstring)
         shared_session_id = session_id()
         REDIS_CLIENT.lpush(shared_session_id, word_data_json)
         # Limit how many records a given user can store
         REDIS_CLIENT.ltrim(shared_session_id, 0, MAX_STORAGE_INDEX)
+    else:
+        print("Not adding '%s'" % wordstring)
 
     # TODO Return an error explicitly if no parts_of_speech
     # TODO so that the error checking is cleaner on the EcmaScript end
-    print(word_data)
     return word_data_json
 
 @app.route("/forget")
@@ -55,11 +57,11 @@ def forget_single_word(wordstring):
         entry = json.loads(word_decoded)
         if entry['word'] == wordstring:
             # Why do we lrem word_decoded, instead of lrem word_blob?
-            pdb.set_trace()
             REDIS_CLIENT.lrem(shared_session_id, word_decoded)
             found += 1
-
-    return "Removed %d instances of %s" % (found, wordstring)
+    msg = "Removed %d instances of %s" % (found, wordstring)
+    print(msg)
+    return msg
 
 @app.route("/<shared_session_id>")
 def store_cookie_and_redirect(shared_session_id):
