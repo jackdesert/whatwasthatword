@@ -207,8 +207,10 @@ $('#content').on('click', '.close-button', function(event){
         url: url,
         type: 'DELETE',
         success: function(data) {
+            // TODO Delete word from wordData and call React.render
+            // so striping will match
+
             // Hide this word locally
-            // TODO Restripe on delete
             $(event.currentTarget).parents('.word-wrapper').hide()
         }.bind(this),
         error: function(xhr, status, err) {
