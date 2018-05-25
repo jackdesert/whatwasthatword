@@ -76,11 +76,8 @@ def home_page():
     shared_session_id = session_id()
 
     words_in_redis = REDIS_CLIENT.lrange(shared_session_id, 0, MAX_STORAGE_INDEX)
-    toString = lambda x : x.decode('utf-8')
-    words_in_redis_strings = list(map(toString, words_in_redis))
-    data = []
-    for entry in words_in_redis_strings:
-        data.append(json.loads(entry))
+
+    data = [json.loads(w.decode('utf-8')) for w in words_in_redis]
 
     join_url = '%s%s' % (request.url_root, shared_session_id)
     response = make_response(render_template('index.jj2', data=data, join_url=join_url))
@@ -112,10 +109,12 @@ def production():
 @app.context_processor
 def add_template_helpers():
     # https://gist.github.com/rduplain/1309522
+    # (These notes from that website)
     # You could simply inject the result of get_endpoint_args.
     # But in my experience, it's easier to read templates which use functions
     # and filters than to inject variables into the global context.
     #
+    # (These notes also from that website)
     # This is especially important for helper functions or context variables
     # which require a lot of work, as the context processor is run on each call
     # to render_template.
