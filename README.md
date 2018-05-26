@@ -144,6 +144,24 @@ If systemd services do not start as expected, tail syslog to see what the error 
     sudo tail -f /var/log/syslog
 
 
+uWSGI
+-----
+
+The unix socket must readable/writable by both nginx and uwsgi. 
+
+The easiest solution is to make sure both nginx and uwsgi run as the same user (www-data).
+
+    # Install uwsgi and python3 plugin
+    sudo apt install uwsgi-core uwsgi-plugin-python3
+
+    # Install required python modules system-wide (So www-data can access them)
+    sudo apt-get install python3-flask python3-livereload python3-redis python3-lxml
+    
+    # Test uwsgi from the command line running as the www-data user
+    cd whatwasthatword
+    sudo uwsgi --plugin=python3 -s /tmp/whatwasthatword.sock --manage-script-name --mount /=wsgi:app --uid www-data --gid www-data
+
+
 TODO
 ----
 

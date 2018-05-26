@@ -11,7 +11,6 @@ import redis
 import json
 import uuid
 import datetime
-import os
 from word import Word
 
 app = Flask(__name__)
@@ -103,10 +102,7 @@ def session_id():
 
 
 def production():
-    key = 'FLASK_ENV'
-    if key in os.environ and os.environ[key] == 'production':
-        return True
-    return False
+    return(app.env == 'production')
 
 @app.context_processor
 def add_template_helpers():
@@ -124,21 +120,27 @@ def add_template_helpers():
 
 
 if __name__ == "__main__":
+    #####################  D E V E L O P M E N T  #########################
+    # This section only gets called in development environment.
+    # Meaning this file was invoked directly by python
+    #
+    #   `python3 whatwasthatword.py`
+    #
+    # (uWSGI deployments call wsgi.py instead, and do not run this block of code)
+
     port = 3900
     host = '0.0.0.0'
-    if production():
-        print('Starting in Production mode')
-        app.run(port=port, host=host)
-    else:
-        # Setting app.debug = true makes it so errors are displayed,
-        # and makes it so code changes are automatically reloaded
-        print('Starting in Development mode')
-        app.debug = True
-        server = LiveReloadServer(app.wsgi_app)
-        # List explicitly which files to watch
-        # This way the database is not also watched
-        server.watch('templates/*')
-        server.watch('static/*')
-        server.watch('*.py')
-        server.watch('*.csv')
-        server.serve(port=port, host=host)
+    # Setting app.debug = true makes it so errors are displayed,
+    # and makes it so code changes are automatically reloaded
+    app.debug = True
+    app.env = 'development'
+    server = LiveReloadServer(app.wsgi_app)
+
+    print('Starting in Development mode')
+    # List explicitly which files to watch
+    # This way the database is not also watched
+    server.watch('templates/*')
+    server.watch('static/*')
+    server.watch('*.py')
+    server.watch('*.csv')
+    server.serve(port=port, host=host)
