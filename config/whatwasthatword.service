@@ -1,0 +1,21 @@
+[Unit]
+Description=WhatWasThatWord
+Wants=network.target
+Wants=redis-server.service
+
+[Service]
+Type=simple
+User=dev
+Group=dev
+WorkingDirectory=/home/dev/whatwasthatword
+Environment=FLASK_ENV=production
+
+# Using a maximum of three threads per process to limit
+# resource allocation during times of peak load.
+ExecStart=/usr/bin/python3 that-word.py
+TimeoutSec=30
+RestartSec=15s
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

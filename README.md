@@ -111,9 +111,37 @@ If using in production, configure Nginx
 
 Start that-word
 
-    python3 that-word.py
+    FLASK_ENV=production python3 that-word.py
 
 Point your browser to localhost:3956
+
+
+
+Production Deploy with Systemd
+------------------------------
+
+It is recommended to deploy to production using systemd
+
+    # Make symbolic links to services
+    cd /lib/systemd/system
+
+    sudo ln -s /home/dev/whatwasthatword/config/whatwasthatword.service
+
+    # Enable service
+    sudo systemctl enable whatwasthatword.service
+
+    # Start services
+    sudo systemctl start  whatwasthatword.service
+
+    # Make sure services are started
+    sudo systemctl | grep whatwasthatword
+
+
+### Debugging Systemd
+
+If systemd services do not start as expected, tail syslog to see what the error is:
+
+    sudo tail -f /var/log/syslog
 
 
 TODO
