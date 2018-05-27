@@ -62,6 +62,11 @@ def forget_single_word(wordstring):
     print(msg)
     return msg
 
+@app.route("/favicon.ico")
+def favicon():
+    # This is needed in development mode to prevent collision with /<shared_session_id>
+    return ''
+
 @app.route("/<shared_session_id>")
 def store_cookie_and_redirect(shared_session_id):
     # Redirect to the root so it looks better to user

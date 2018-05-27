@@ -32,7 +32,8 @@
             </div>
 
             <div class='footer-row'>
-                <a href='/' onClick='alert("Open this url in another browser to share the same list:\n\n    {{join_url}}"); return false; // Return false so href is not followed'>Link with my Other Browser</a>
+                <a href='#a-swing-and-a-miss' onClick='$(".share-link").show();return false; // Return false so href is not followed'>Link with my Other Browser</a>
+                <div class='share-link'>Paste this into your other browser:<br>{{join_url}}</div>
             </div>
 
         </div>

@@ -13,9 +13,9 @@ http://whatwasthatword.com
 Technologies
 ------------
 
-    back-end:    Python, Flask, Redis, lxml
+    back-end:    Python, Flask, uWSGI, Redis, lxml
     front-end:   ReactJS
-    data-source: Merriam-Webster (xml) API
+    data-source: Merriam-Webster API (xml)
 
 
 No Login Required
@@ -63,25 +63,21 @@ Install python3, pip3, and required python modules:
 
 
 
-
-
 Development
 -----------
-
-
 
 In development mode:
 
   * JavaScript libraries are served from local disk
-  * Code is loaded automatically when it changes
   * LiveReload is automatically activated
+  * Code is loaded automatically when it changes
 
     cd whatwasthatword/
 
     # Start server
-    python3 that-word.py
+    python3 whatwasthatword.py
 
-    # Compile changes to jsx files to javascript files
+    # Compile .jsx files to .js whenever they change
     npx babel --presets react --watch jsx/ --out-dir static/
 
 Point your browser to localhost:3956
@@ -99,55 +95,23 @@ Generated Files (Do Not Edit Manually):
     * static/that-word.js
 
 
-Production Deploy
------------------
+Nginx
+-----
 
 If using in production, configure Nginx
 
     cd whatwasthatword/
-    vi config/that-word-nginx.conf  # Set the server names you wish to use
-    sudo ln -s config/that-word-nginx.conf /usr/local/nginx/conf/sites-enabled/that-word-nginx.conf
+    vi config/whatwasthatword-nginx.conf  # Set the server names you wish to use
+    cd /etc/nginx/sites-enabled
+    sudo ln -s /path/to/whatwasthatword/config/whatwasthatword-nginx.conf
     sudo nginx -s reload
 
-Start that-word
-
-    FLASK_ENV=production python3 that-word.py
-
-Point your browser to localhost:3956
-
-
-
-Production Deploy with Systemd
-------------------------------
-
-It is recommended to deploy to production using systemd
-
-    # Make symbolic links to services
-    cd /lib/systemd/system
-
-    sudo ln -s /home/dev/whatwasthatword/config/whatwasthatword.service
-
-    # Enable service
-    sudo systemctl enable whatwasthatword.service
-
-    # Start services
-    sudo systemctl start  whatwasthatword.service
-
-    # Make sure services are started
-    sudo systemctl | grep whatwasthatword
-
-
-### Debugging Systemd
-
-If systemd services do not start as expected, tail syslog to see what the error is:
-
-    sudo tail -f /var/log/syslog
 
 
 uWSGI
 -----
 
-The unix socket must readable/writable by both nginx and uwsgi. 
+The unix socket must readable/writable by both nginx and uwsgi.
 
 The easiest solution is to make sure both nginx and uwsgi run as the same user (www-data).
 
@@ -156,38 +120,42 @@ The easiest solution is to make sure both nginx and uwsgi run as the same user (
 
     # Install required python modules system-wide (So www-data can access them)
     sudo apt-get install python3-flask python3-livereload python3-redis python3-lxml
-    
+
     # Test uwsgi from the command line running as the www-data user
     cd whatwasthatword
     sudo uwsgi --plugin=python3 -s /tmp/whatwasthatword.sock --manage-script-name --mount /=wsgi:app --uid www-data --gid www-data
 
 
+Emperor
+-------
+
+(Work in Progress)
+
+Ideally, you want uWSGI to autostart.
+
+
 TODO
 ----
 
-  NOTES:  first click on "my" issues page reload instead of REDIS_CLIENT.lrem
-  * Fix bug where deleting a word change
-    - where / is / my / coat
-    - delete "my"
-  * Either all single or all double quotes
-  * systemd
+  * Run via emperor
+  * Either all single or all double quotes in source code
+  * Run over httpS / let's encrypt
+  * Clean README
+  * Get "share with other browser" to work (livereload showing up)
 
 
   * Assign stripe colors via css ::even to avoid striping errors on delete
   * Clean Python
-  * Great README
-  * Adapt to run via systemd
   * Better organization of README
-  * Get items to show up in order they were typed in
+  * Copy-and-pastable "Share with other browser" link (Currently doesn not allow copy)
 
 
-  * Play mp3 inline
+  * Play mp3 inline, instead of it loading a new webpage
   * return "vietnam" as "Vietnam", but still prefer lower case words if available
   * Expansion for more info?
   * Great Favicon
   * Show that word is being fetched
-  * Autofocus
-  * Make prod more robust by not autoreloading
+  * Autofocus search bar
   * Optimize padding breakpoint for android phones
   * Make input bigger on phone
   * Make speaker display correct size android
@@ -196,33 +164,12 @@ TODO
   * Clean up the <dt> tag processing to use the elegance of xpath more coherently
   * When more than one example per definition, show them all. Example: "snobby"
   * Remove "as" from the definition of "jack", or find out what it is there for
-  * Make it autoplay anything you type
-  * When input is "Run", I want the word to display as "run". When word is "greek", display "Greek"
+  * Make it autoplay the .mp3 for anything you search
+  * Capitalization: when input is "Run", I want the word to display as "run". When word is "greek", display "Greek"
   * Allow plurals to be singularized and match
-  * Better pronunciation for Oedipus
-  * Put it in my portfolio
+  * Better pronunciation for word "Oedipus"
   * Get "twirp" to work (twerp works fine)
   * Fix so that after hitting "back" from listening to mp3, most recent word shows up
-  * Get "were" to work (definition is buried in the etymology,
+  * Get word "were" to work (definition is buried in the etymology)
   * Longer cookie expiration
 
-DONE
-----
-  * 500, 404
-  * Fixed so that words are persistent through server restarts
-  * Do something sensible when searching for the word "vietnam", which has no part_of_speech
-  * Show more than 10 words
-  * Store only 100 words
-  * Plain favicon to prevent 404
-  * Clean up code so most of it lives in a class
-  * Use a *reputable* dictionary, that has more sophisticated definitions, like merriam webster
-  * Make sure if a word has two definitions under a single part_of_speech, that they both get displayed
-    Which might involve finding a different API provider since Pearsons seems to only give one definition
-    per part_of_speech.
-  * Synonyms
-  * what about these words: sheesh, crimeny, yikes
-  * "snobby" and "snobbish" need <fw> tag integrated in order to work
-  * "superfluous" needs <d_link> tag integrated to work. Similar to "snobby" above
-  * If I misspell a word, tell me about it! (currently 500 response). Example: "snoby"
-  * Add pronunciation and mp3 back in
-  * Add a route for /reset that clears words for that user

@@ -216,6 +216,10 @@ a:hover{
   padding-top: 0.5rem;
 }
 
+.share-link{
+  display: none;
+}
+
 button.toggle-additional-dates{
   font-size: 130%;
   margin: 2rem;
