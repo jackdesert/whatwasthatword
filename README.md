@@ -1,7 +1,7 @@
 What Was that Word
 ==================
 
-What Was that Word is a dictionary app that doubles as a vocabulary list.
+A dictionary app that stores your history, effectively doubling as a vocabulary list.
 
 
 Live on the Web
@@ -10,20 +10,32 @@ Live on the Web
 http://whatwasthatword.com
 
 
+
+Features
+--------
+
+### No Login Required
+
+No login is required. Users are differentiated by a cookie stored during their first visit.
+
+
+### Share Your List Across Browsers and Devices
+
+Take your cookie with you to bridge other browsers together.
+(Look for the link at the bottom of the home page)
+
+### Merriam-Webster Data
+
+Pulls data from the free Merriam-Webster API
+
+
+
 Technologies
 ------------
 
     back-end:    Python, Flask, uWSGI, Redis, lxml
     front-end:   ReactJS
     data-source: Merriam-Webster API (xml)
-
-
-No Login Required
------------------
-
-No login is required. Users are differentiated by a cookie stored during their first visit.
-
-Take your cookie with you to bridge other browsers together.
 
 
 Directory Structure

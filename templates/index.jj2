@@ -28,11 +28,11 @@
             </div>
 
             <div class='footer-row'>
-                <a href='/forget'>Forget my Words</a>
+                Forget my <a href='/forget'>Words</a>
             </div>
 
             <div class='footer-row'>
-                <a href='#a-swing-and-a-miss' onClick='$(".share-link").show();return false; // Return false so href is not followed'>Link with my Other Browser</a>
+                Link with my <a href='#a-swing-and-a-miss' onClick='$(".share-link").show();return false; // Return false so href is not followed'>Other Browser</a>
                 <div class='share-link'>Paste this into your other browser:<br>{{join_url}}</div>
             </div>
 
