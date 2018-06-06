@@ -17,6 +17,11 @@
     </head>
     <body>
         <div id="content"></div>
+        <div id="crawler">
+            <h1>WhatWasThatWord</h1>
+            <p>What do you call a dictionary that remembers your words? A vocabulary list. </p>
+            <p>When I read a scholarly book, often it takes several trips to the dictionary to grok the words in each chapter. WhatWasThatWord was born out of a desire to actually learn those words, not just look them up once and forget about them.</p>
+        </div>
 
         <div class='footer'>
             <div class='footer-row'>

@@ -219,3 +219,4 @@ $('#content').on('click', '.close-button', function(event){
     })
 })
 
+$('#crawler').hide()

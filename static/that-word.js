@@ -257,3 +257,5 @@ $('#content').on('click', '.close-button', function (event) {
         }.bind(this)
     });
 });
+
+$('#crawler').hide();
