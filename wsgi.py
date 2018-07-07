@@ -1,4 +1,1 @@
-from whatwasthatword import app
-
-if __name__ == '__main__':
-    app.run()
+from whatwasthatword import app as application
