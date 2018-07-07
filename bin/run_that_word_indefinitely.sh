@@ -11,8 +11,8 @@
 echo "REMINDER: call this with 'nohup' and a trailing '&'"
 
 while true; do
-  cd /home/dev/what-was-that-word
-  FLASK_ENV=production python3 that-word.py
+  cd /home/dev/whatwasthatword
+  sudo uwsgi --plugin=python3 -s /tmp/whatwasthatword.sock --manage-script-name --mount /=wsgi:app --uid www-data --gid www-data
   sleep 2
   mkdir -p log
   echo "that-word restarted `date`" >> log/that_word_restart.log
