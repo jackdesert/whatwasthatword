@@ -4,4 +4,4 @@ __pycache__/
 /log
 .nohup.out
 
-
+/tmp/*.pid

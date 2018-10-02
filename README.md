@@ -7,7 +7,7 @@ A dictionary app that stores your history, effectively doubling as a vocabulary 
 Live on the Web
 ---------------
 
-http://whatwasthatword.com
+http://dictionary.jackdesert.com
 
 
 
